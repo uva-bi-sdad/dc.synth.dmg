@@ -1,0 +1,53 @@
+#' Generate demographic estimates given the block-level address counts
+#'
+#' @param acs_data ACS data from get_data.
+#' @param bac_data Block-level address counts from get_data.
+#' @param block_measure Measure to use from the bac_data
+#' @param acs_var_list Named list of ACS Codes.
+#' @import data.table
+#' @export
+generate_block_dmgs <-
+  function(acs_data,
+           bac_data,
+           block_measure = "total_housing_units",
+           acs_var_list = list(
+             total_pop = "B01001_001",
+             wht_alone = "B02001_002",
+             afr_amer_alone = "B02001_003",
+             male = "B01001_002",
+             male0_4 = "B01001_003",
+             male5_9 = "B01001_004",
+             male10_14 = "B01001_005",
+             male15_17 = "B01001_006",
+             female = "B01001_026",
+             female0_4 = "B01001_027",
+             female5_9 = "B01001_028",
+             female10_14 = "B01001_029",
+             female15_17 = "B01001_030"
+           )) {
+    bg_list <- unique(acs_data$GEOID)
+    for (i in 1:length(bg_list)) {
+      bg_id <- paste0("^", bg_list[i])
+      bg_hous_units <-
+        bac_data[geoid %like% as.name(bg_id) &
+                   measure == block_measure, sum(value)]
+      for (i in 1:length(acs_var_list)) {
+        bg_tot_pop <-
+          acs_data[GEOID %like% bg_id & variable == acs_var_list[i], estimate]
+        bk_tot_pop_unit <- bg_tot_pop / bg_hous_units
+        bk_pop <-
+          unique(bac_data[geoid %like% as.name(bg_id) &
+                            measure == "total_housing_units", .(geoid,
+                                                                var = names(acs_var_list[i]),
+                                                                value = (value * bk_tot_pop_unit))])
+        if (!exists("dt_out")) {
+          dt_out <- bk_pop
+        } else {
+          dt_out <- data.table::rbindlist(list(dt_out, bk_pop))
+        }
+      }
+    }
+    if (exists("dt_out")) {
+      return(dt_out)
+    }
+  }
