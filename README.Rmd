@@ -9,7 +9,7 @@ output: github_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## A Data Commons Package for Generating Block and Parcel-Level Demographics from ACS Estimates
+## A Data Commons Package for Generating Block and Parcel-Level Demographics using ACS Estimates and Counts of Housing Units per Census Block
 
 ### Installation
 

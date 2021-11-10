@@ -3,7 +3,7 @@ dc.synth.dmg
 Aaron Schroeder
 11/10/2021
 
-## A Data Commons Package for Generating Block and Parcel-Level Demographics from ACS Estimates
+## A Data Commons Package for Generating Block and Parcel-Level Demographics using ACS Estimates and Counts of Housing Units per Census Block
 
 ### Installation
 
