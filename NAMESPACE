@@ -2,5 +2,6 @@
 
 export(generate_block_dmgs)
 export(get_data)
+export(set_acs_variables)
 import(data.table)
 import(tidycensus)

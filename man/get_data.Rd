@@ -4,7 +4,12 @@
 \alias{get_data}
 \title{Get ACS demographics and Census Block Address Counts for a County}
 \usage{
-get_data(state_abbrev = "", county_fips = "", geo_level = "block group")
+get_data(
+  state_abbrev = "",
+  county_fips = "",
+  geo_level = "block group",
+  acs_var_list = .GlobalEnv$named_acs_var_list
+)
 }
 \arguments{
 \item{county_fips}{3 number FIPS Code.}

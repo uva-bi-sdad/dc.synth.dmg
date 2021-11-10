@@ -10,21 +10,17 @@ generate_block_dmgs <-
   function(acs_data,
            bac_data,
            block_measure = "total_housing_units",
-           acs_var_list = list(
-             total_pop = "B01001_001",
-             wht_alone = "B02001_002",
-             afr_amer_alone = "B02001_003",
-             male = "B01001_002",
-             male0_4 = "B01001_003",
-             male5_9 = "B01001_004",
-             male10_14 = "B01001_005",
-             male15_17 = "B01001_006",
-             female = "B01001_026",
-             female0_4 = "B01001_027",
-             female5_9 = "B01001_028",
-             female10_14 = "B01001_029",
-             female15_17 = "B01001_030"
-           )) {
+           acs_var_list = .GlobalEnv$named_acs_var_list) {
+    
+    if (is.null(acs_data)) {
+      print("missing ACS data.")
+      return()
+    } 
+    if (is.null(bac_data)) {
+      print("missing block address count data.")
+      return()
+    }
+    
     bg_list <- unique(acs_data$GEOID)
     for (i in 1:length(bg_list)) {
       bg_id <- paste0("^", bg_list[i])
@@ -33,7 +29,7 @@ generate_block_dmgs <-
                    measure == block_measure, sum(value)]
       for (i in 1:length(acs_var_list)) {
         bg_tot_pop <-
-          acs_data[GEOID %like% bg_id & variable == acs_var_list[i], estimate]
+          acs_data[GEOID %like% bg_id & variable == names(acs_var_list[i]), estimate]
         bk_tot_pop_unit <- bg_tot_pop / bg_hous_units
         bk_pop <-
           unique(bac_data[geoid %like% as.name(bg_id) &

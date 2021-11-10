@@ -11,7 +11,18 @@
 get_data <-
   function(state_abbrev = "",
            county_fips = "",
-           geo_level = "block group") {
+           geo_level = "block group",
+           acs_var_list = .GlobalEnv$named_acs_var_list) {
+    
+    if (state_abbrev == "") {
+      print("missing 2-letter state abbreviation")
+      return()
+    } 
+    if (county_fips == "") {
+      print("missing 3-number county fips code")
+      return()
+    }
+    
     state_fips_codes <-  data.table::setDT(tigris::fips_codes)
     state_fips <-
       unique(state_fips_codes[state == state_abbrev, state_code])
@@ -22,21 +33,7 @@ get_data <-
         state = state_fips,
         county = county_fips,
         geography = geo_level,
-        variables = c(
-          "B01001_001",
-          "B02001_002",
-          "B02001_003",
-          "B01001_002",
-          "B01001_003",
-          "B01001_004",
-          "B01001_005",
-          "B01001_006",
-          "B01001_026",
-          "B01001_027",
-          "B01001_028",
-          "B01001_029",
-          "B01001_030"
-        )
+        variables = acs_var_list
       )
     )
     acs_name <- paste0("acs_data_", state_fips, county_fips)

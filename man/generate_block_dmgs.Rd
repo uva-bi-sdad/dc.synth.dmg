@@ -8,11 +8,7 @@ generate_block_dmgs(
   acs_data,
   bac_data,
   block_measure = "total_housing_units",
-  acs_var_list = list(total_pop = "B01001_001", wht_alone = "B02001_002",
-    afr_amer_alone = "B02001_003", male = "B01001_002", male0_4 = "B01001_003", male5_9 =
-    "B01001_004", male10_14 = "B01001_005", male15_17 = "B01001_006", female =
-    "B01001_026", female0_4 = "B01001_027", female5_9 = "B01001_028", female10_14 =
-    "B01001_029", female15_17 = "B01001_030")
+  acs_var_list = .GlobalEnv$named_acs_var_list
 )
 }
 \arguments{
@@ -26,9 +22,4 @@ generate_block_dmgs(
 }
 \description{
 Generate demographic estimates given the block-level address counts
-}
-\examples{
-library(dc.census.block.address.counts)
-mydata <- get_data(state_abbrev = "VA", county_fips = "013")
-bk_dmgs <- generate_block_dmgs(acs_data = mydata$acs_data_51013, bac_data = mydata$bac_data_51013)
 }

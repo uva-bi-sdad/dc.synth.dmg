@@ -1,0 +1,57 @@
+---
+title: "dc.synth.dmg"
+author: "Aaron Schroeder"
+date: "11/10/2021"
+output: github_document
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+```
+
+## A Data Commons Package for Generating Block and Parcel-Level Demographics from ACS Estimates
+
+### Installation
+
+```{r eval=FALSE}
+remotes::install_github("uva-bi-sdad/dc.synth.dmg")
+```
+
+```{r message=FALSE}
+library(dc.synth.dmg)
+```
+
+### Get ACS and Block Address Count Data
+
+#### get_data() returns a list of 2 datasets, one of ACS data, the other a count of total housing units per Census block
+
+```{r message=FALSE, warning=FALSE, comment=NA}
+mydata <- get_data(state_abbrev = "VA", county_fips = "013")
+
+print(mydata)
+```
+
+### Generate Demographic Estimates per Census Block
+
+```{r message=FALSE, comment=NA}
+bk_dmgs <-
+  generate_block_dmgs(acs_data = mydata$acs_data_51013,
+                      bac_data = mydata$bac_data_51013)
+
+print(head(bk_dmgs[order(geoid)]))
+```
+
+### To change the default ACS variables set your own named list of variables
+
+```{r message=FALSE, comment=NA, warning=FALSE}
+set_acs_variables(list(my_total_population = "B01001_001",
+                       my_male_population = "B01001_002"))
+
+mydata <- get_data(state_abbrev = "VA", county_fips = "013")
+
+bk_dmgs <-
+  generate_block_dmgs(acs_data = mydata$acs_data_51013,
+                      bac_data = mydata$bac_data_51013)
+
+print(head(bk_dmgs[order(geoid)]))
+```
