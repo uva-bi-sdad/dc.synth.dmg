@@ -25,15 +25,21 @@ for (i in 1:length(cnty_fips)) {
   }
 }
 
+readr::write_csv(dt_out, "data-raw/census_block_acs_demographics.csv")
+# write to db
+con <- get_db_conn()
+dc_dbWriteTable(con, "dc_working", "capital_region_census_block_acs_demographics", unique(dt_out))
 
-# Generate Demographic Estimates per Census Block
-bk_dmgs <- generate_block_dmgs(acs_data = mydata$acs_data_11001, bac_data = mydata$bac_data_11001)
+arl <- dt_out[geoid %like% "^51013"]
+arl_black <- unique(arl[arl$var %like% "afr"])
 
+# get block geo
+con <- get_db_conn()
+va_cblocks <- sf::st_read(con, c("gis_census_tl", "tl_2021_51_tabblock20"))
+arl_cblocks <- data.table::setDT(va_cblocks[va_cblocks$COUNTYFP20=="013",])
 
-
-
-# Load the Arlington VA Master Housing Unit Database
-va_arl_housing_unit_db <- sf::st_read("https://opendata.arcgis.com/datasets/628f6de7205641169273ea684a74fb0f_0.geojson")
-
-bk_dmg_1 <- bk_dmgs[geoid=="510131001001006"]
-arl_hus <- va_arl_housing_units[va_arl_housing_units$Full_Block=="510131001001006",]
+# join to dmgs
+jn <- merge(arl_cblocks, arl_black, by.x = "GEOID20", by.y = "geoid")
+jn_sf <- sf::st_as_sf(jn)
+# plot
+plot(jn_sf[, c("value")])
