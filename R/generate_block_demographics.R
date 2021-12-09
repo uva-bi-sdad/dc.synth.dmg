@@ -20,30 +20,30 @@ generate_block_dmgs <-
       print("missing block address count data.")
       return()
     }
-    
+    #browser()
     bg_list <- unique(acs_data$GEOID)
     for (i in 1:length(bg_list)) {
       bg_id <- paste0("^", bg_list[i])
       bg_hous_units <-
         bac_data[geoid %like% as.name(bg_id) &
                    measure == block_measure, sum(value)]
-      for (i in 1:length(acs_var_list)) {
+      for (j in 1:length(acs_var_list)) {
         bg_tot_pop <-
-          acs_data[GEOID %like% bg_id & variable == names(acs_var_list[i]), estimate]
+          acs_data[GEOID %like% bg_id & variable == names(acs_var_list[j]), estimate]
         bk_tot_pop_unit <- bg_tot_pop / bg_hous_units
         bk_pop <-
           unique(bac_data[geoid %like% as.name(bg_id) &
                             measure == "total_housing_units", .(geoid,
-                                                                var = names(acs_var_list[i]),
+                                                                var = names(acs_var_list[j]),
                                                                 value = (value * bk_tot_pop_unit))])
-        if (!exists("dt_out")) {
+        if (!exists("dt_out", inherits = FALSE)) {
           dt_out <- bk_pop
         } else {
           dt_out <- data.table::rbindlist(list(dt_out, bk_pop))
         }
       }
     }
-    if (exists("dt_out")) {
+    if (exists("dt_out", inherits = FALSE)) {
       return(dt_out)
     }
   }
