@@ -44,28 +44,32 @@ for (f in file_paths) {
  
 dt_out[is.na(value)]
 
-
-census_block_acs_demographics <- dt_out
-
 readr::write_csv(dt_out, "data-raw/census_block_acs_demographics.csv")
 # write to db
 con <- get_db_conn()
 dc_dbWriteTable(con, "dc_working", "capital_region_census_block_acs_demographics", dt_out)
 DBI::dbDisconnect(con)
 
+con <- get_db_conn()
+census_block_acs_demographics <- DBI::dbReadTable(con, c("dc_working", "capital_region_census_block_acs_demographics"))
+DBI::dbDisconnect(con)
 
 # Load the Arlington VA Master Housing Unit Database
 va_arl_housing_units <- sf::st_read("https://opendata.arcgis.com/datasets/628f6de7205641169273ea684a74fb0f_0.geojson")
 
 # Block Parcels
-va_arl_block_parcels <- unique(va_arl_housing_units[, c("GIS_Parcel_ID", "Full_Block")])
+va_arl_block_parcels <- unique(va_arl_housing_units[, c("RPC_Master", "Full_Block")])
 
 con <- get_db_conn()
 dc_dbWriteTable(con, "dc_working", "va_arl_block_parcels", va_arl_block_parcels)
 DBI::dbDisconnect(con)
 
-arl_blk_prcl_cnt <- va_arl_block_parcels[, .N, c("Full_Block")]
-arl_census_block_acs_demographics <- census_block_acs_demographics[geoid %like% "^51013"]
+con <- get_db_conn()
+va_arl_block_parcels <- sf::st_read(con, c("dc_working", "va_arl_block_parcels"))
+DBI::dbDisconnect(con)
+
+arl_blk_prcl_cnt <- data.table::setDT(va_arl_block_parcels)[, .N, c("Full_Block")]
+arl_census_block_acs_demographics <- data.table::setDT(census_block_acs_demographics)[geoid %like% "^51013"]
 
 arl_census_block_acs_demographics_prcl_cnt <- merge(arl_census_block_acs_demographics, arl_blk_prcl_cnt, by.x = "geoid", by.y = "Full_Block")
 
@@ -74,31 +78,25 @@ arl_census_block_acs_demographics_prcl_cnt[, value_per_prcl := value/N]
 
 # Join arl_census_block_acs_demographics_prcl_cnt and block parcels for dmgs per parcel
 
-data.table::setDT(va_arl_block_parcels)
-dt_out[, geoid := as.character(geoid)]
+# data.table::setDT(va_arl_block_parcels)
+# dt_out[, geoid := as.character(geoid)]
 
 va_arl_block_parcels_dmgs <- merge(arl_census_block_acs_demographics_prcl_cnt, va_arl_block_parcels, by.x = "geoid", by.y = "Full_Block", allow.cartesian = TRUE)
 
-readr::write_csv(va_arl_block_parcels_dmgs[, .(gis_prcl_id = GIS_Parcel_ID, geoid, year = 2019, measure = var, value = value_per_prcl)], "data-raw/va_arl_block_parcels_dmgs.csv", quote = "all")
+readr::write_csv(va_arl_block_parcels_dmgs[, .(rpc_master = RPC_Master, geoid, year = 2019, measure = var, value = value_per_prcl)], "data-raw/va_arl_block_parcels_dmgs.csv", quote = "all")
 
 
-va_arl_block_parcels_dmgs_wide <- make_data_wide(va_arl_block_parcels_dmgs[, .(gis_prcl_id = GIS_Parcel_ID, geoid, year = 2019, measure = var, value = value_per_prcl)])
+va_arl_block_parcels_dmgs_wide <- make_data_wide(va_arl_block_parcels_dmgs[, .(rpc_master = RPC_Master, geoid, year = 2019, measure = var, value = value_per_prcl)])
+va_arl_block_parcels_dmgs_wide <- va_arl_block_parcels_dmgs_wide[trimws(rpc_master, "both") != "",]
+
+va_arl_block_parcels_dmgs_wide[, wht_alone_pct := round(100*(wht_alone/total_pop), 2)]
+va_arl_block_parcels_dmgs_wide[, not_wht_alone_pct := 100 - round(100*(wht_alone/total_pop), 2)]
 
 
+plot(va_arl_housing_units[, c("Total_Units")])
 
+va_arl_housing_units_dt <- data.table::as.data.table(va_arl_housing_units)
+va_arl_block_parcels_dmgs_wide_geo <- merge(va_arl_block_parcels_dmgs_wide, va_arl_housing_units_dt, by.x = "rpc_master", by.y = "RPC_Master")
+va_arl_block_parcels_dmgs_wide_geo_sf <- sf::st_as_sf(va_arl_block_parcels_dmgs_wide_geo)
 
-
-###############
-arl <- dt_out[geoid %like% "^51013"]
-arl_black <- unique(arl[arl$var %like% "afr"])
-
-# get block geo
-con <- get_db_conn()
-va_cblocks <- sf::st_read(con, c("gis_census_tl", "tl_2021_51_tabblock20"))
-arl_cblocks <- data.table::setDT(va_cblocks[va_cblocks$COUNTYFP20=="013",])
-
-# join to dmgs
-jn <- merge(arl_cblocks, arl_black, by.x = "GEOID20", by.y = "geoid")
-jn_sf <- sf::st_as_sf(jn)
-# plot
-plot(jn_sf[, c("value")])
+plot(va_arl_block_parcels_dmgs_wide_geo_sf[, c("wht_alone_pct")])
