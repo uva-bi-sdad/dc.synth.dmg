@@ -56,3 +56,4 @@ get_data <-
     out_list
   }
 
+# substr(bk_cnt_data$data$geoid, 1, 12)

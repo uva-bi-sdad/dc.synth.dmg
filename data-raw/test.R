@@ -54,21 +54,72 @@ con <- get_db_conn()
 census_block_acs_demographics <- DBI::dbReadTable(con, c("dc_working", "capital_region_census_block_acs_demographics"))
 DBI::dbDisconnect(con)
 
+
 # Load the Arlington VA Master Housing Unit Database
 va_arl_housing_units <- sf::st_read("https://opendata.arcgis.com/datasets/628f6de7205641169273ea684a74fb0f_0.geojson")
 
 # Block Parcels
-va_arl_block_parcels <- unique(va_arl_housing_units[, c("RPC_Master", "Full_Block")])
+va_arl_block_parcels <- unique(va_arl_housing_units[, c("RPC_Master", "Full_Block", "Total_Units")])
 
 con <- get_db_conn()
 dc_dbWriteTable(con, "dc_working", "va_arl_block_parcels", va_arl_block_parcels)
 DBI::dbDisconnect(con)
 
 con <- get_db_conn()
-va_arl_block_parcels <- sf::st_read(con, c("dc_working", "va_arl_block_parcels"))
+va_arl_block_parcels_sf <- sf::st_read(con, c("dc_working", "va_arl_block_parcels"))
 DBI::dbDisconnect(con)
 
+data.table::setDT(va_arl_block_parcels_sf)
+arl_bg_prcel_cnt <- va_arl_block_parcels_sf[, .(cnt = sum(Total_Units)), substr(Full_Block, 1, 12)][nchar(substr)==12]
+colnames(arl_bg_prcel_cnt) <- c("bg_geoid", "prcl_cnt")
+
+va_arl_block_parcels_sf <- sf::st_as_sf(va_arl_block_parcels_sf)
+va_arl_block_parcels_sf$bg_geoid <- substr(va_arl_block_parcels_sf$Full_Block, 1, 12)
+
+va_arl_block_parcels_cnts_sf <- merge(va_arl_block_parcels_sf, arl_bg_prcel_cnt, by = "bg_geoid")
+va_arl_block_parcels_cnts_sf$mult <- va_arl_block_parcels_cnts_sf$Total_Units/va_arl_block_parcels_cnts_sf$prcl_cnt
+
+
+# ACS Data
+acs_data <- data.table::setDT(
+  tidycensus::get_acs(
+    year = 2019,
+    state = "51",
+    county = "013",
+    geography = "block group",
+    variables = named_acs_var_list
+  )
+)
+colnames(acs_data) <- c("bg_geoid", "name", "variable", "estimate", "moe")
+
+va_arl_block_parcels_cnts_dmgs_sf <- merge(va_arl_block_parcels_cnts_sf, acs_data, by = "bg_geoid", allow.cartesian=TRUE)
+va_arl_block_parcels_cnts_dmgs_sf$prcl_estimate <- va_arl_block_parcels_cnts_dmgs_sf$mult * va_arl_block_parcels_cnts_dmgs_sf$estimate
+
+tp <- va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="total_pop",]
+plot(tp[, c("prcl_estimate")])
+
+aaa <- va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="afr_amer_alone",]
+plot(aaa[10000:19000, c("prcl_estimate")])
+
+con <- get_db_conn()
+dc_dbWriteTable(con, "dc_working", "arl_parcel_demographics", va_arl_block_parcels_cnts_dmgs_sf)
+DBI::dbDisconnect(con)
+
+
+va_arl_block_parcels_cnts_dmgs_dt <- data.table::as.data.table(va_arl_block_parcels_cnts_dmgs_sf)
+
+va_arl_block_parcels_cnts_dmgs_dt$geometry <- NULL
+va_arl_block_parcels_cnts_dmgs_dt <- va_arl_block_parcels_cnts_dmgs_dt[, .(rpc_master = RPC_Master, geoid = Full_Block, measure = variable, value = prcl_estimate)]
+
+va_arl_block_parcels_cnts_dmgs_dt_wide <- data.table::dcast(va_arl_block_parcels_cnts_dmgs_dt, rpc_master + geoid ~ measure, value.var = "value", fun.aggregate = sum)
+
+
+
+
+
+
 arl_blk_prcl_cnt <- data.table::setDT(va_arl_block_parcels)[, .N, c("Full_Block")]
+
 arl_census_block_acs_demographics <- data.table::setDT(census_block_acs_demographics)[geoid %like% "^51013"]
 
 arl_census_block_acs_demographics_prcl_cnt <- merge(arl_census_block_acs_demographics, arl_blk_prcl_cnt, by.x = "geoid", by.y = "Full_Block")
@@ -96,7 +147,22 @@ va_arl_block_parcels_dmgs_wide[, not_wht_alone_pct := 100 - round(100*(wht_alone
 plot(va_arl_housing_units[, c("Total_Units")])
 
 va_arl_housing_units_dt <- data.table::as.data.table(va_arl_housing_units)
-va_arl_block_parcels_dmgs_wide_geo <- merge(va_arl_block_parcels_dmgs_wide, va_arl_housing_units_dt, by.x = "rpc_master", by.y = "RPC_Master")
+va_arl_block_parcels_dmgs_wide_geo <- merge(va_arl_block_parcels_dmgs_wide, va_arl_housing_units_dt, by.x = "rpc_master", by.y = "RPC_Master", all.y = TRUE)
 va_arl_block_parcels_dmgs_wide_geo_sf <- sf::st_as_sf(va_arl_block_parcels_dmgs_wide_geo)
 
 plot(va_arl_block_parcels_dmgs_wide_geo_sf[, c("wht_alone_pct")])
+
+
+
+
+con <- get_db_conn()
+va_arl_census_blocks <- sf::st_read(dsn = con, query = "select * from gis_census_tl.tl_2021_51_tabblock20 where \"COUNTYFP20\" = '013'")
+DBI::dbDisconnect(con)
+
+con <- get_db_conn()
+va_arl_census_block_groups <- sf::st_read(dsn = con, query = "select * from gis_census_cb.cb_2018_51_bg_500k where \"COUNTYFP\" = '013'")
+DBI::dbDisconnect(con)
+
+plot(st_geometry(va_arl_census_block_groups))
+
+va_arl_block_parcels_sf <- st_as_sf(va_arl_block_parcels)
