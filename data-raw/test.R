@@ -105,6 +105,20 @@ con <- get_db_conn()
 dc_dbWriteTable(con, "dc_working", "arl_parcel_demographics", va_arl_block_parcels_cnts_dmgs_sf)
 DBI::dbDisconnect(con)
 
+con <- get_db_conn()
+va_arl_block_parcels_cnts_dmgs_sf <- sf::st_read(con, c("dc_working", "arl_parcel_demographics"))
+DBI::dbDisconnect(con)
+
+bbox_curr <- sf::st_bbox(va_arl_block_parcels_cnts_dmgs_sf)
+print(bbox_curr)
+bbox <- c(xmin = -77.17183, ymin = 38.82748, xmax = -77.1, ymax = 38.86)
+
+
+# plot(va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="wht_alone", c("estimate")])
+
+plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="wht_alone",c("prcl_estimate")], bbox))
+plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="afr_amer_alone",c("prcl_estimate")], bbox))
+
 
 va_arl_block_parcels_cnts_dmgs_dt <- data.table::as.data.table(va_arl_block_parcels_cnts_dmgs_sf)
 
@@ -112,6 +126,11 @@ va_arl_block_parcels_cnts_dmgs_dt$geometry <- NULL
 va_arl_block_parcels_cnts_dmgs_dt <- va_arl_block_parcels_cnts_dmgs_dt[, .(rpc_master = RPC_Master, geoid = Full_Block, measure = variable, value = prcl_estimate)]
 
 va_arl_block_parcels_cnts_dmgs_dt_wide <- data.table::dcast(va_arl_block_parcels_cnts_dmgs_dt, rpc_master + geoid ~ measure, value.var = "value", fun.aggregate = sum)
+
+
+
+
+
 
 
 
