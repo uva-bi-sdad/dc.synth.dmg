@@ -116,7 +116,10 @@ bbox <- c(xmin = -77.17183, ymin = 38.82748, xmax = -77.1, ymax = 38.86)
 
 # plot(va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="wht_alone", c("estimate")])
 
-plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="wht_alone",c("prcl_estimate")], bbox))
+white_only <- va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="wht_alone",c("prcl_estimate")]
+
+
+plot(sf::st_crop(white_only, bbox))
 plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_sf[va_arl_block_parcels_cnts_dmgs_sf$variable=="afr_amer_alone",c("prcl_estimate")], bbox))
 
 
@@ -127,10 +130,21 @@ va_arl_block_parcels_cnts_dmgs_dt <- va_arl_block_parcels_cnts_dmgs_dt[, .(rpc_m
 
 va_arl_block_parcels_cnts_dmgs_dt_wide <- data.table::dcast(va_arl_block_parcels_cnts_dmgs_dt, rpc_master + geoid ~ measure, value.var = "value", fun.aggregate = sum)
 
+va_arl_parcel_geo <- unique(va_arl_block_parcels_cnts_dmgs_sf[, c("RPC_Master")])
+colnames(va_arl_parcel_geo) <- c("rpc_master", "geometry")
 
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo <- merge(va_arl_block_parcels_cnts_dmgs_dt_wide, va_arl_parcel_geo, by = "rpc_master")
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo[, wht_alone_pct := round(100*(wht_alone/total_pop), 2)]
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo[, afr_amer_alone_pct := round(100*(afr_amer_alone/total_pop), 2)]
 
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf <- sf::st_as_sf(va_arl_block_parcels_cnts_dmgs_dt_wide_geo)
 
+con <- get_db_conn()
+dc_dbWriteTable(con, "dc_working", "va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf", va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf)
+DBI::dbDisconnect(con)
 
+plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf[, c("wht_alone_pct")], bbox))
+plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf[, c("afr_amer_alone_pct")], bbox))
 
 
 
