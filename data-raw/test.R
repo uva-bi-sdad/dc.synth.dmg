@@ -1,7 +1,7 @@
 library(dc.synth.dmg)
 library(dc.census.block.address.counts)
 # DC Region County FIPS Codes
-cnty_fips <- list(
+cnty_fips <- list(cnty_fips
   c("VA", "059"), # Fairfax
   c("VA", "600"), # Fairfax City
   c("VA", "013"), # Arlington
@@ -142,6 +142,13 @@ va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf <- sf::st_as_sf(va_arl_block_parce
 con <- get_db_conn()
 dc_dbWriteTable(con, "dc_working", "va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf", va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf)
 DBI::dbDisconnect(con)
+
+
+con <- get_db_conn()
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf <- sf::st_read(con, c("dc_working", "va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf"))
+DBI::dbDisconnect(con)
+ 
+
 
 plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf[, c("wht_alone_pct")], bbox))
 plot(sf::st_crop(va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf[, c("afr_amer_alone_pct")], bbox))
