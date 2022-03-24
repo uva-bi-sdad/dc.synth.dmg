@@ -12,6 +12,7 @@ get_data <-
   function(state_abbrev = "",
            county_fips = "",
            geo_level = "block group",
+           yr = 2020L,
            acs_var_list = .GlobalEnv$named_acs_var_list) {
     
     if (state_abbrev == "") {
@@ -33,6 +34,7 @@ get_data <-
         state = state_fips,
         county = county_fips,
         geography = geo_level,
+        year = yr,
         variables = acs_var_list
       )
     )

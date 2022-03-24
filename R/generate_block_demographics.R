@@ -20,7 +20,7 @@ generate_block_dmgs <-
       print("missing block address count data.")
       return()
     }
-    #browser()
+    
     bg_list <- unique(acs_data$GEOID)
     for (i in 1:length(bg_list)) {
       bg_id <- paste0("^", bg_list[i])
