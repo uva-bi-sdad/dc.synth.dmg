@@ -114,9 +114,12 @@ va_arl_block_parcels_cnts_dmgs_dt <- va_arl_block_parcels_cnts_dmgs_dt[, .(rpc_m
 va_arl_block_parcels_cnts_dmgs_dt_wide <- data.table::dcast(va_arl_block_parcels_cnts_dmgs_dt, rpc_master + geoid ~ measure, value.var = "value", fun.aggregate = sum)
 
 # add back parcel geo
-va_arl_parcel_geo <- unique(va_arl_block_parcels_cnts_dmgs_sf[, c("RPC_Master")])
-colnames(va_arl_parcel_geo) <- c("rpc_master", "geometry")
-va_arl_block_parcels_cnts_dmgs_dt_wide_geo <- merge(va_arl_block_parcels_cnts_dmgs_dt_wide, va_arl_parcel_geo, by = "rpc_master")
+va_arl_parcel_geo <- va_arl_block_parcels_cnts_dmgs_sf[, c("RPC_Master")]
+va_arl_parcel_geo_sf <- sf::st_as_sf(setDF(va_arl_parcel_geo))
+va_arl_parcel_geo_sf_unq <- unique(va_arl_parcel_geo_sf)
+
+colnames(va_arl_parcel_geo_sf_unq) <- c("rpc_master", "geometry")
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo <- merge(va_arl_block_parcels_cnts_dmgs_dt_wide, va_arl_parcel_geo_sf_unq, by = "rpc_master")
 
 # add race percentage columns
 va_arl_block_parcels_cnts_dmgs_dt_wide_geo[, wht_alone_pct := round(100*(wht_alone/total_pop), 2)]
