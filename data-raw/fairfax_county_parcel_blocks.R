@@ -21,7 +21,7 @@ saveRDS(fairfax_address_points_blocks_wgs84, "data-raw/fairfax_address_points_bl
 
 # Drop geometry and set as data.table for easier filtering
 fairfax_address_points_blocks <- setDT(st_drop_geometry(fairfax_address_points_blocks_wgs84))
-# Eliminate duplictes - Group by PARCEL_PIN and select the first one in each group
+# Eliminate duplicates - Group by PARCEL_PIN and select the first one in each group
 fairfax_address_points_blocks_unq <- fairfax_address_points_blocks[, .SD[1], "PARCEL_PIN"]
 
 # Merge (Left Join) Parcels
