@@ -1,0 +1,42 @@
+---
+title: "Census estimate at geography level"
+output: html_notebook
+---
+
+```{r}
+library(dplyr)
+library(sf)
+
+# upload data new geography block group
+
+
+geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_human_services_regions/distribution/va059_geo_ffxct_gis_2022_human_services_regions_unsimplified.geojson")
+
+# upload data from fairfax estimate at the parcel level
+#fairfax_housing_units_cnts_dmgs_dt_wide_geo <- sf::st_as_sf(fairfax_housing_units_cnts_dmgs_dt_wide_geo)
+
+```
+
+```{r}
+plot(geo_infos['region_name'])
+```
+
+```{r}
+plot(fairfax_housing_units_cnts_dmgs_dt_wide_geo['male'])
+```
+
+
+```{r}
+# merge the two data using intercept
+fairfax_geo_dmgs_dt_wide_geo <- st_join(geo_infos, fairfax_housing_units_cnts_dmgs_dt_wide_geo, join = st_intersects)
+```
+
+```{r}
+test <- fairfax_housing_units_cnts_dmgs_dt_wide_geo
+test$geometry <- test$geometry %>%
+  s2::s2_rebuild() %>%
+  sf::st_as_sfc()
+
+test <- st_join(geo_infos, test, join = st_intersects, left=FALSE)
+```
+

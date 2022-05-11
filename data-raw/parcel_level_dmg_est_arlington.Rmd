@@ -1,0 +1,140 @@
+---
+title: "Parcel-level demographic estimates for Arlington County, VA"
+output: html_notebook
+---
+
+## Get and save to DB the Arlington VA Master Housing Unit Database
+
+```{r}
+va_arl_housing_units <- sf::st_read("https://opendata.arcgis.com/datasets/628f6de7205641169273ea684a74fb0f_0.geojson")
+
+# filter to unique parcel, with census block and total housing units on the parcel
+va_arl_block_parcels <- unique(va_arl_housing_units[, c("RPC_Master", "Full_Block", "Total_Units")])
+
+# save to DB
+#con <- get_db_conn()
+#dc_dbWriteTable(con, "dc_working", "va_arl_block_parcels", va_arl_block_parcels)
+#DBI::dbDisconnect(con)
+```
+
+## Create a demographic multiplier for each parcel
+
+```{r}
+# Load saved data: unique parcel, with census block and total housing units on the parcel
+#con <- get_db_conn()
+#va_arl_block_parcels_sf <- sf::st_read(con, c("dc_working", "va_arl_block_parcels"))
+#DBI::dbDisconnect(con)
+
+va_arl_block_parcels_sf <- va_arl_block_parcels
+
+# set as data.table to perform easy group by aggregation
+library(data.table)
+setDT(va_arl_block_parcels_sf)
+
+# get count of parcels per block group: group by block group (first 12 integers of Full_Block) and get count of units per block group (sum(Total_Units))
+# remove rows where nchar(substr)!=12
+arl_bg_prcel_cnt <- va_arl_block_parcels_sf[, .(cnt = sum(Total_Units)), substr(Full_Block, 1, 12)][nchar(substr)==12]
+
+# update column names
+colnames(arl_bg_prcel_cnt) <- c("bg_geoid", "prcl_cnt")
+
+# set va_arl_block_parcels_sf back to sf for geo functions
+va_arl_block_parcels_sf <- sf::st_as_sf(va_arl_block_parcels_sf)
+
+# create block group geoid (to make merge easier)
+va_arl_block_parcels_sf$bg_geoid <- substr(va_arl_block_parcels_sf$Full_Block, 1, 12)
+
+# merge on bg_geoid
+va_arl_block_parcels_cnts_sf <- merge(va_arl_block_parcels_sf, arl_bg_prcel_cnt, by = "bg_geoid")
+
+# create parcel-level demographic multiplier by dividing Total_Units per parcel by total count of parcels in the block group (prcl_cnt) 
+va_arl_block_parcels_cnts_sf$mult <- va_arl_block_parcels_cnts_sf$Total_Units/va_arl_block_parcels_cnts_sf$prcl_cnt
+```
+
+## Get ACS Demographic Data
+
+```{r}
+# create named acs variable list
+named_acs_var_list <- list(
+        total_pop = "B01001_001",
+        wht_alone = "B02001_002",
+        afr_amer_alone = "B02001_003",
+        amr_ind_alone = "B02001_004",
+        asian_alone = "B02001_005",
+        male = "B01001_002",
+        male0_4 = "B01001_003",
+        male5_9 = "B01001_004",
+        male10_14 = "B01001_005",
+        male15_17 = "B01001_006",
+        female = "B01001_026",
+        female0_4 = "B01001_027",
+        female5_9 = "B01001_028",
+        female10_14 = "B01001_029",
+        female15_17 = "B01001_030"
+      )
+
+# ACS Data
+library(tidycensus)
+census_api_key(Sys.getenv('census_api_key'))
+
+acs_data <- data.table::setDT(
+  tidycensus::get_acs(
+    year = 2019,
+    state = "51",
+    county = "013",
+    geography = "block group",
+    variables = named_acs_var_list
+  )
+)
+# rename columns
+colnames(acs_data) <- c("bg_geoid", "name", "variable", "estimate", "moe")
+```
+
+## Generate parcel demographic estimates
+
+```{r}
+# merge with ACS data and generate parcel demographic estimates by multiplying ACS estimate by parcel multipliers
+va_arl_block_parcels_cnts_dmgs_sf <- merge(va_arl_block_parcels_cnts_sf, acs_data, by = "bg_geoid", allow.cartesian=TRUE)
+va_arl_block_parcels_cnts_dmgs_sf$prcl_estimate <- va_arl_block_parcels_cnts_dmgs_sf$mult * va_arl_block_parcels_cnts_dmgs_sf$estimate
+
+# save to DB
+#con <- get_db_conn()
+#dc_dbWriteTable(con, "dc_working", "arl_parcel_demographics", va_arl_block_parcels_cnts_dmgs_sf)
+#DBI::dbDisconnect(con)
+```
+
+## Create "wide" table of demographic counts per parcel
+
+```{r}
+# switch to data.table
+va_arl_block_parcels_cnts_dmgs_dt <- data.table::as.data.table(va_arl_block_parcels_cnts_dmgs_sf)
+
+# drop geometry column - huge because so many repeats and not needed here
+va_arl_block_parcels_cnts_dmgs_dt$geometry <- NULL
+
+# filter to needed columns
+va_arl_block_parcels_cnts_dmgs_dt <- va_arl_block_parcels_cnts_dmgs_dt[, .(rpc_master = RPC_Master, geoid = Full_Block, measure = variable, value = prcl_estimate)]
+
+# Cast long file to wide
+va_arl_block_parcels_cnts_dmgs_dt_wide <- data.table::dcast(va_arl_block_parcels_cnts_dmgs_dt, rpc_master + geoid ~ measure, value.var = "value", fun.aggregate = sum)
+
+# add back parcel geo
+va_arl_parcel_geo <- va_arl_block_parcels_cnts_dmgs_sf[, c("RPC_Master")]
+va_arl_parcel_geo_sf <- sf::st_as_sf(setDF(va_arl_parcel_geo))
+va_arl_parcel_geo_sf_unq <- unique(va_arl_parcel_geo_sf)
+
+colnames(va_arl_parcel_geo_sf_unq) <- c("rpc_master", "geometry")
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo <- merge(va_arl_block_parcels_cnts_dmgs_dt_wide, va_arl_parcel_geo_sf_unq, by = "rpc_master")
+
+# add race percentage columns
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo[, wht_alone_pct := round(100*(wht_alone/total_pop), 2)]
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo[, afr_amer_alone_pct := round(100*(afr_amer_alone/total_pop), 2)]
+
+# back to sf before writing to DB
+va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf <- sf::st_as_sf(va_arl_block_parcels_cnts_dmgs_dt_wide_geo)
+
+# save to DB
+#con <- get_db_conn()
+#dc_dbWriteTable(con, "dc_working", "va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf", va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf)
+#DBI::dbDisconnect(con)
+```

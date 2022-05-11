@@ -1,0 +1,143 @@
+---
+title: "Parcel-level demographic estimates for Fairfax County, VA"
+output: html_notebook
+---
+
+## Get and save to DB the Fairfax tax administration real estate database.
+
+```{r}
+library(dplyr)
+library(sf)
+
+# upload the data
+fairfax_parcels_blocks <- readRDS("~/Github/vdh/dc.synth.dmg/data-raw/fairfax_parcels_blocks_wgs84.RDS") %>% dplyr::select(PIN,GEOID20,HOUSING20,POP20)
+
+fairfax_housing_units <- read.csv('~/Github/vdh/dc.synth.dmg/data-raw/Tax_Administration_s_Real_Estate_Fairfax.csv') %>% dplyr::select(PARID,LIVUNIT)
+
+# merge the two data
+fairfax_housing_units <- merge(fairfax_housing_units, fairfax_parcels_blocks, by.x='PARID', by.y='PIN')
+```
+
+```{r}
+# Remove all NA units
+fairfax_housing_units <- fairfax_housing_units[!is.na(fairfax_housing_units$LIVUNIT),]
+fairfax_housing_units <- fairfax_housing_units[!is.na(fairfax_housing_units$GEOID20),]
+```
+
+
+## Create a demographic multiplier for each parcel
+```{r}
+
+fairfax_housing_units_sf <- fairfax_housing_units
+
+# set as data.table to perform easy group by aggregation
+library(data.table)
+setDT(fairfax_housing_units_sf)
+
+# get count of parcels per block group: group by block group (first 12 integers of Full_Block) and get count of units per block group (sum(Total_Units))
+# remove rows where nchar(substr)!=12
+faifax_bg_prcel_cnt <- fairfax_housing_units_sf[, .(cnt = sum(LIVUNIT)), substr(GEOID20, 1, 12)][nchar(substr)==12]
+
+# update column names
+colnames(faifax_bg_prcel_cnt) <- c("bg_geoid", "prcl_cnt")
+
+# set va_arl_block_parcels_sf back to sf for geo functions
+fairfax_housing_units_sf <- sf::st_as_sf(fairfax_housing_units_sf)
+
+# create block group geoid (to make merge easier)
+fairfax_housing_units_sf$bg_geoid <- substr(fairfax_housing_units_sf$GEOID20, 1, 12)
+
+# merge on bg_geoid
+fairfax_housing_units_cnts_sf <- merge(fairfax_housing_units_sf, faifax_bg_prcel_cnt, by = "bg_geoid")
+
+# create parcel-level demographic multiplier by dividing Total_Units per parcel by total count of parcels in the block group (prcl_cnt) 
+fairfax_housing_units_cnts_sf$mult <- fairfax_housing_units_cnts_sf$LIVUNIT/fairfax_housing_units_cnts_sf$prcl_cnt
+```
+
+# Get ACS demographic data
+```{r}
+# create named acs variable list
+named_acs_var_list <- list(
+        total_pop = "B01001_001",
+        wht_alone = "B02001_002",
+        afr_amer_alone = "B02001_003",
+        amr_ind_alone = "B02001_004",
+        asian_alone = "B02001_005",
+        hispanic = "B03002_012",
+        male = "B01001_002",
+        male0_4 = "B01001_003",
+        male5_9 = "B01001_004",
+        male10_14 = "B01001_005",
+        male15_17 = "B01001_006",
+        female = "B01001_026",
+        female0_4 = "B01001_027",
+        female5_9 = "B01001_028",
+        female10_14 = "B01001_029",
+        female15_17 = "B01001_030"
+      )
+
+# ACS Data: fairfax county
+library(tidycensus)
+census_api_key(Sys.getenv('census_api_key'))
+
+acs_data <- data.table::setDT(
+  tidycensus::get_acs(
+    year = 2019,
+    state = "51",
+    county = "059",
+    geography = "block group",
+    variables = named_acs_var_list
+  )
+)
+# rename columns
+colnames(acs_data) <- c("bg_geoid", "name", "variable", "estimate", "moe")
+
+```
+
+# maps parcelle with country block
+```{r}
+# merge with ACS data and generate parcel demographic estimates by multiplying ACS estimate by parcel multipliers
+fairfax_housing_units_dmgs_sf <- merge(fairfax_housing_units_cnts_sf, acs_data, by='bg_geoid', allow.cartesian=TRUE)
+fairfax_housing_units_dmgs_sf$prcl_estimate <- fairfax_housing_units_dmgs_sf$mult * fairfax_housing_units_dmgs_sf$estimate
+
+```
+
+
+## Create "wide" table of demographic counts per parcel
+```{r}
+# switch to data.table
+fairfax_housing_units_cnts_dmgs_dt <- data.table::as.data.table(fairfax_housing_units_dmgs_sf)
+
+# drop geometry column - huge because so many repeats and not needed here
+fairfax_housing_units_cnts_dmgs_dt$geometry <- NULL
+
+# filter to needed columns
+fairfax_housing_units_cnts_dmgs_dt <- fairfax_housing_units_cnts_dmgs_dt[, .(parid = PARID, geoid = GEOID20, measure = variable, value = prcl_estimate)]
+
+# Cast long file to wide
+fairfax_housing_units_cnts_dmgs_dt_wide <- data.table::dcast(fairfax_housing_units_cnts_dmgs_dt, parid + geoid ~ measure, value.var = "value", fun.aggregate = sum)
+
+# add back parcel geo
+fairfax_parcel_geo <- fairfax_housing_units_dmgs_sf[, c("PARID")]
+fairfax_parcel_geo_sf <- sf::st_as_sf(setDF(fairfax_parcel_geo))
+fairfax_parcel_geo_sf_unq <- unique(fairfax_parcel_geo_sf)
+
+colnames(fairfax_parcel_geo_sf_unq) <- c("parid", "geometry")
+fairfax_housing_units_cnts_dmgs_dt_wide_geo <- merge(fairfax_housing_units_cnts_dmgs_dt_wide, fairfax_parcel_geo_sf_unq, by = "parid")
+
+# add race percentage columns
+fairfax_housing_units_cnts_dmgs_dt_wide_geo[, wht_alone_pct := round(100*(wht_alone/total_pop), 2)]
+fairfax_housing_units_cnts_dmgs_dt_wide_geo[, afr_amer_alone_pct := round(100*(afr_amer_alone/total_pop), 2)]
+
+# back to sf before writing to DB
+fairfax_housing_units_cnts_dmgs_dt_wide_geo <- sf::st_as_sf(fairfax_housing_units_cnts_dmgs_dt_wide_geo)
+
+# save to DB
+#con <- get_db_conn()
+#dc_dbWriteTable(con, "f_working", "va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf", va_arl_block_parcels_cnts_dmgs_dt_wide_geo_sf)
+#DBI::dbDisconnect(con)
+```
+
+
+
+
