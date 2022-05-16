@@ -10,7 +10,7 @@ library(sf)
 # upload data new geography block group
 
 
-geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_human_services_regions/distribution/va059_geo_ffxct_gis_2022_human_services_regions_unsimplified.geojson")
+geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_human_services_regions/distribution/va059_geo_ffxct_gis_2022_human_services_regions.geojson")
 
 # upload data from fairfax estimate at the parcel level
 #fairfax_housing_units_cnts_dmgs_dt_wide_geo <- sf::st_as_sf(fairfax_housing_units_cnts_dmgs_dt_wide_geo)
@@ -21,22 +21,54 @@ geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_
 plot(geo_infos['region_name'])
 ```
 
-```{r}
-plot(fairfax_housing_units_cnts_dmgs_dt_wide_geo['male'])
-```
 
+# The reason behind the problem. The change in sf v1.0 was move from backend engine for unprojected coordinates (the geographic ones, i.e. lat - long as in EPSG 4326) from GEOS to s2 from Google. GEOS treats projected coordinates as planar (i.e. two points lie on a line of infinite max lenght) while s2 is more "correct" (two points lie on a great circle of circumference of 40 075 kilometers). The change of default backend had implications, as both GEOS and s2 are making shortcuts and taking (different) assumptions. Have a look at r-spatial.github.io/sf/articles/sf7.html for more information
 
 ```{r}
 # merge the two data using intercept
-fairfax_geo_dmgs_dt_wide_geo <- st_join(geo_infos, fairfax_housing_units_cnts_dmgs_dt_wide_geo, join = st_intersects)
+sf::sf_use_s2(FALSE)
+fairfax_acs_human_services_regions <- st_join(geo_infos, fairfax_housing_units_cnts_dmgs_dt_wide_geo, join = st_intersects)
+
+# Estimate the result by human services regions
+fairfax_human_services_regions <- fairfax_acs_human_services_regions %>%
+                                    select(geoid=geoid.x,
+                                           region_name,
+                                           afr_amer_alone,
+                                           amr_ind_alone,
+                                           asian_alone,
+                                           wht_alone,
+                                           male,
+                                           male0_4,
+                                           male5_9,
+                                           male10_14,
+                                           male15_17,
+                                           female,
+                                           female0_4,
+                                           female5_9,
+                                           female10_14,
+                                           female15_17,
+                                           geometry) %>%
+                                    group_by(geoid) %>%
+                                    summarise(afr_amer_alone = sum(afr_amer_alone, na.rm=T),
+                                           amr_ind_alone = sum(amr_ind_alone, na.rm=T),
+                                           asian_alone = sum(asian_alone, na.rm=T),
+                                           wht_alone = sum(wht_alone, na.rm=T),
+                                           male = sum(male, na.rm=T),
+                                           male0_4 = sum(male0_4, na.rm=T),
+                                           male5_9 = sum(male5_9, na.rm=T),
+                                           male10_14 = sum(male10_14, na.rm=T),
+                                           male15_17 = sum(male15_17, na.rm=T),
+                                           female = sum(female, na.rm=T),
+                                           female0_4 = sum(female0_4, na.rm=T),
+                                           female5_9 = sum(female5_9, na.rm=T),
+                                           female10_14 = sum(female10_14, na.rm=T),
+                                           female15_17 = sum(female15_17, na.rm=T))
+
 ```
+
 
 ```{r}
-test <- fairfax_housing_units_cnts_dmgs_dt_wide_geo
-test$geometry <- test$geometry %>%
-  s2::s2_rebuild() %>%
-  sf::st_as_sfc()
-
-test <- st_join(geo_infos, test, join = st_intersects, left=FALSE)
+plot(fairfax_human_services_regions['amr_ind_alone'])
 ```
+
 
