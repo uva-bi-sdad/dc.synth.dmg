@@ -44,7 +44,9 @@ dc_dbWriteTable <-
 
 
 # upload data new geography informations
-geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_planning_districts/distribution/va059_geo_ffxct_gis_2022_planning_districts.geojson")
+#geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_planning_districts/distribution/va059_geo_ffxct_gis_2022_planning_districts.geojson")
+
+geo_infos <- sf::st_read("https://github.com/uva-bi-sdad/dc.geographies/blob/main/data/va059_geo_ffxct_gis_2022_planning_districts/distribution/va059_geo_ffxct_gis_2022_planning_districts.geojson?raw=T")
 
 
 ## upload demographic characteristics per parcels
@@ -113,6 +115,8 @@ fairfax_dmg_dt_geo <- fairfax_dmg_dt_geo %>% mutate(prct_afr_amer_alone = afr_am
                                                     prct_female15_17 = female15_17/sum(female15_17))
 
 
+plot(fairfax_dmg_dt_geo[,c("prct_afr_amer_alone")])
+
 ## add broadband measure
 
 # load data on broadband
@@ -159,7 +163,7 @@ ookla_fairfax_new_geo_dt_wide <- ookla_fairfax_geo_dt_wide_geo %>%
             tests = sum(mult*tests, na.rm=T))
 
 # Comments: devices are distributed according to the proportion of living units.
-plot(ookla_fairfax_new_geo_dt_wide['devices'])
+plot(ookla_fairfax_new_geo_dt_wide['avg_down_using_devices'])
 
 
 

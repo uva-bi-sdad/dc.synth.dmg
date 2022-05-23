@@ -44,7 +44,7 @@ dc_dbWriteTable <-
 
 
 # upload data new geographies
-geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_human_services_regions/distribution/va059_geo_ffxct_gis_2022_human_services_regions.geojson")
+geo_infos <- sf::st_read("https://github.com/uva-bi-sdad/dc.geographies/blob/main/data/va059_geo_ffxct_gis_2022_human_services_regions/distribution/va059_geo_ffxct_gis_2022_human_services_regions.geojson?raw=T")
 
 
 

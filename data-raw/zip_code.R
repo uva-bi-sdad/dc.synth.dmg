@@ -43,7 +43,7 @@ dc_dbWriteTable <-
   }
 
 # upload data new geography informations
-geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_zip_codes/distribution/va059_geo_ffxct_gis_2022_zip_codes.geojson")
+geo_infos <- sf::st_read("https://github.com/uva-bi-sdad/dc.geographies/blob/main/data/va059_geo_ffxct_gis_2022_zip_codes/distribution/va059_geo_ffxct_gis_2022_zip_codes.geojson?raw=T")
 
 
 ## upload demographic characteristics per parcels
