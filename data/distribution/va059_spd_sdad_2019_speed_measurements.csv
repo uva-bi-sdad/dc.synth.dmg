@@ -1,0 +1,73 @@
+"geoid","region_type","region_name","year","measure","value"
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","avg_down_using_devices",123.092049848676
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","avg_down_using_tests",123.568524979098
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","avg_lat_using_devices",8.85451035013621
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","avg_lat_using_tests",8.85082607978329
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","avg_up_using_devices",94.6689897489552
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","avg_up_using_tests",94.6006907347053
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","devices",8308.17140444011
+"51059_sd_braddock","supervisor district","BRADDOCK","2019","tests",27077.0878336231
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","avg_down_using_devices",120.276550464409
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","avg_down_using_tests",122.095291261563
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","avg_lat_using_devices",9.17709363783606
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","avg_lat_using_tests",8.82989417857815
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","avg_up_using_devices",95.0621391737265
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","avg_up_using_tests",95.7113551315522
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","devices",9894.3874741155
+"51059_sd_dranesville","supervisor district","DRANESVILLE","2019","tests",33488.9652709959
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","avg_down_using_devices",131.91782872184
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","avg_down_using_tests",134.795271889206
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","avg_lat_using_devices",9.79476232972226
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","avg_lat_using_tests",9.59573972193201
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","avg_up_using_devices",93.5191085929666
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","avg_up_using_tests",95.9658631161893
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","devices",11675.3588727533
+"51059_sd_hunter mill","supervisor district","HUNTER MILL","2019","tests",37666.4933370454
+"51059_sd_lee","supervisor district","LEE","2019","avg_down_using_devices",132.927364188064
+"51059_sd_lee","supervisor district","LEE","2019","avg_down_using_tests",133.180239628548
+"51059_sd_lee","supervisor district","LEE","2019","avg_lat_using_devices",10.3675149152553
+"51059_sd_lee","supervisor district","LEE","2019","avg_lat_using_tests",9.88677800973345
+"51059_sd_lee","supervisor district","LEE","2019","avg_up_using_devices",95.4767087675194
+"51059_sd_lee","supervisor district","LEE","2019","avg_up_using_tests",96.5741238056233
+"51059_sd_lee","supervisor district","LEE","2019","devices",7713.74222000837
+"51059_sd_lee","supervisor district","LEE","2019","tests",26632.4684834865
+"51059_sd_mason","supervisor district","MASON","2019","avg_down_using_devices",118.992816785618
+"51059_sd_mason","supervisor district","MASON","2019","avg_down_using_tests",119.483376786455
+"51059_sd_mason","supervisor district","MASON","2019","avg_lat_using_devices",9.09970311545857
+"51059_sd_mason","supervisor district","MASON","2019","avg_lat_using_tests",9.02396280528827
+"51059_sd_mason","supervisor district","MASON","2019","avg_up_using_devices",84.4245840264848
+"51059_sd_mason","supervisor district","MASON","2019","avg_up_using_tests",84.6925113286912
+"51059_sd_mason","supervisor district","MASON","2019","devices",7691.37287233991
+"51059_sd_mason","supervisor district","MASON","2019","tests",24511.6744944142
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","avg_down_using_devices",127.926182164327
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","avg_down_using_tests",128.786845305312
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","avg_lat_using_devices",11.3320246695006
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","avg_lat_using_tests",10.6342800880282
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","avg_up_using_devices",91.4809732151629
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","avg_up_using_tests",91.0633309225126
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","devices",8052.60123298877
+"51059_sd_mount vernon","supervisor district","MOUNT VERNON","2019","tests",26452.0093548502
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","avg_down_using_devices",125.698476928602
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","avg_down_using_tests",124.532271302181
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","avg_lat_using_devices",9.43229944797817
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","avg_lat_using_tests",9.58749555240799
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","avg_up_using_devices",90.3783567961794
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","avg_up_using_tests",90.0220054193202
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","devices",7103.21500454651
+"51059_sd_providence","supervisor district","PROVIDENCE","2019","tests",22481.7264545264
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","avg_down_using_devices",122.514237758064
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","avg_down_using_tests",122.264826592428
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","avg_lat_using_devices",9.15644611744194
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","avg_lat_using_tests",8.8835664647911
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","avg_up_using_devices",93.8684974704451
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","avg_up_using_tests",93.5506658204019
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","devices",10103.3472946637
+"51059_sd_springfield","supervisor district","SPRINGFIELD","2019","tests",33470.0953491946
+"51059_sd_sully","supervisor district","SULLY","2019","avg_down_using_devices",130.885751413693
+"51059_sd_sully","supervisor district","SULLY","2019","avg_down_using_tests",130.568260832941
+"51059_sd_sully","supervisor district","SULLY","2019","avg_lat_using_devices",9.15836800723677
+"51059_sd_sully","supervisor district","SULLY","2019","avg_lat_using_tests",9.01151804974862
+"51059_sd_sully","supervisor district","SULLY","2019","avg_up_using_devices",102.243842060567
+"51059_sd_sully","supervisor district","SULLY","2019","avg_up_using_tests",103.228235267107
+"51059_sd_sully","supervisor district","SULLY","2019","devices",9174.24059608734
+"51059_sd_sully","supervisor district","SULLY","2019","tests",30210.2513451274
