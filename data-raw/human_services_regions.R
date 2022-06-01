@@ -92,17 +92,16 @@ fairfax_dmg_dt_geo <- fairfax_acs_dmg_dt %>%
             pop_65_plus = sum(pop_65_plus, na.rm=T))
 
 # Compute the percentage (not the overall size of the population) by new geography 
-fairfax_dmg_dt_geo <- fairfax_dmg_dt_geo %>% mutate(prct_total_pop = total_pop/sum(total_pop),
-                                                    prct_afr_amer_alone = afr_amer_alone/sum(afr_amer_alone),
-                                                    prct_amr_ind_alone = amr_ind_alone/sum(amr_ind_alone),
-                                                    prct_asian_alone = asian_alone/sum(asian_alone),
-                                                    prct_wht_alone = wht_alone/sum(wht_alone),
-                                                    prct_hispanic = hispanic/sum(hispanic),
-                                                    prct_male = male/sum(male),
-                                                    prct_female = female/sum(female),
-                                                    prct_pop_under_20 = pop_under_20/sum(pop_under_20),
-                                                    prct_pop_20_64 = pop_20_64/sum(pop_20_64),
-                                                    prct_pop_65_plus = pop_65_plus/sum(pop_65_plus))
+fairfax_dmg_dt_geo <- fairfax_dmg_dt_geo %>% mutate(prct_afr_amer_alone = 100*afr_amer_alone/total_pop,
+                                                    prct_amr_ind_alone = 100*amr_ind_alone/total_pop,
+                                                    prct_asian_alone = 100*asian_alone/total_pop,
+                                                    prct_wht_alone = 100*wht_alone/total_pop,
+                                                    prct_hispanic = 100*hispanic/total_pop,
+                                                    prct_male = 100*male/total_pop,
+                                                    prct_female = 100*female/total_pop,
+                                                    prct_pop_under_20 = 100*pop_under_20/total_pop,
+                                                    prct_pop_20_64 = 100*pop_20_64/total_pop,
+                                                    prct_pop_65_plus = 100*pop_65_plus/total_pop)
 
 
 # rename all variables
