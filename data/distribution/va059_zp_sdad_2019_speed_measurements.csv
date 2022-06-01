@@ -1,0 +1,425 @@
+"geoid","region_type","region_name","year","measure","value"
+20120,"zip code","CENTREVILLE","2019","avg_down_using_devices",134.710092611835
+20120,"zip code","CENTREVILLE","2019","avg_down_using_tests",133.4108594669
+20120,"zip code","CENTREVILLE","2019","avg_lat_using_devices",9.08435389496544
+20120,"zip code","CENTREVILLE","2019","avg_lat_using_tests",8.88117797124901
+20120,"zip code","CENTREVILLE","2019","avg_up_using_devices",106.614103716486
+20120,"zip code","CENTREVILLE","2019","avg_up_using_tests",107.29726211278
+20120,"zip code","CENTREVILLE","2019","devices",3138.11268170088
+20120,"zip code","CENTREVILLE","2019","tests",10531.8388304128
+20121,"zip code","CENTREVILLE","2019","avg_down_using_devices",130.976292334607
+20121,"zip code","CENTREVILLE","2019","avg_down_using_tests",132.719817676432
+20121,"zip code","CENTREVILLE","2019","avg_lat_using_devices",8.79174563799417
+20121,"zip code","CENTREVILLE","2019","avg_lat_using_tests",8.70659116871431
+20121,"zip code","CENTREVILLE","2019","avg_up_using_devices",101.078733951773
+20121,"zip code","CENTREVILLE","2019","avg_up_using_tests",103.394542844628
+20121,"zip code","CENTREVILLE","2019","devices",2049.29187497391
+20121,"zip code","CENTREVILLE","2019","tests",6176.69253000526
+20124,"zip code","CLIFTON","2019","avg_down_using_devices",123.230399820653
+20124,"zip code","CLIFTON","2019","avg_down_using_tests",119.617528640385
+20124,"zip code","CLIFTON","2019","avg_lat_using_devices",9.834870448954
+20124,"zip code","CLIFTON","2019","avg_lat_using_tests",9.42796924632501
+20124,"zip code","CLIFTON","2019","avg_up_using_devices",84.1106976224061
+20124,"zip code","CLIFTON","2019","avg_up_using_tests",82.6233600505239
+20124,"zip code","CLIFTON","2019","devices",1568.47655488578
+20124,"zip code","CLIFTON","2019","tests",5421.43616162298
+20151,"zip code","CHANTILLY","2019","avg_down_using_devices",128.77150719398
+20151,"zip code","CHANTILLY","2019","avg_down_using_tests",129.801249401759
+20151,"zip code","CHANTILLY","2019","avg_lat_using_devices",9.08372891480683
+20151,"zip code","CHANTILLY","2019","avg_lat_using_tests",8.88136360236303
+20151,"zip code","CHANTILLY","2019","avg_up_using_devices",101.711981417412
+20151,"zip code","CHANTILLY","2019","avg_up_using_tests",104.499831160262
+20151,"zip code","CHANTILLY","2019","devices",1573.91604373855
+20151,"zip code","CHANTILLY","2019","tests",5860.64926191039
+20164,"zip code","STERLING","2019","avg_down_using_devices",126.721679573901
+20164,"zip code","STERLING","2019","avg_down_using_tests",128.914173131432
+20164,"zip code","STERLING","2019","avg_lat_using_devices",8.44997786228683
+20164,"zip code","STERLING","2019","avg_lat_using_tests",8.31204210442293
+20164,"zip code","STERLING","2019","avg_up_using_devices",104.08713413186
+20164,"zip code","STERLING","2019","avg_up_using_tests",106.364429682888
+20164,"zip code","STERLING","2019","devices",21.0220976942253
+20164,"zip code","STERLING","2019","tests",75.3254904743281
+20170,"zip code","HERNDON","2019","avg_down_using_devices",127.409687135974
+20170,"zip code","HERNDON","2019","avg_down_using_tests",129.899283273341
+20170,"zip code","HERNDON","2019","avg_lat_using_devices",10.1337903673353
+20170,"zip code","HERNDON","2019","avg_lat_using_tests",9.50648695201168
+20170,"zip code","HERNDON","2019","avg_up_using_devices",90.9590737167236
+20170,"zip code","HERNDON","2019","avg_up_using_tests",91.2044663863484
+20170,"zip code","HERNDON","2019","devices",3233.66231317502
+20170,"zip code","HERNDON","2019","tests",10013.9480937986
+20171,"zip code","HERNDON","2019","avg_down_using_devices",127.145553342577
+20171,"zip code","HERNDON","2019","avg_down_using_tests",127.827596673236
+20171,"zip code","HERNDON","2019","avg_lat_using_devices",9.25403673464521
+20171,"zip code","HERNDON","2019","avg_lat_using_tests",9.32176198259974
+20171,"zip code","HERNDON","2019","avg_up_using_devices",97.6008196491792
+20171,"zip code","HERNDON","2019","avg_up_using_tests",98.0341932261442
+20171,"zip code","HERNDON","2019","devices",3366.47811132742
+20171,"zip code","HERNDON","2019","tests",10853.5106696602
+20190,"zip code","RESTON","2019","avg_down_using_devices",149.625215462709
+20190,"zip code","RESTON","2019","avg_down_using_tests",150.599177398662
+20190,"zip code","RESTON","2019","avg_lat_using_devices",10.842381924069
+20190,"zip code","RESTON","2019","avg_lat_using_tests",10.2901128863771
+20190,"zip code","RESTON","2019","avg_up_using_devices",91.9074583272026
+20190,"zip code","RESTON","2019","avg_up_using_tests",91.2631295099444
+20190,"zip code","RESTON","2019","devices",1889.41033807083
+20190,"zip code","RESTON","2019","tests",5513.6237579129
+20191,"zip code","RESTON","2019","avg_down_using_devices",133.009207730843
+20191,"zip code","RESTON","2019","avg_down_using_tests",136.847834109552
+20191,"zip code","RESTON","2019","avg_lat_using_devices",10.1749711699855
+20191,"zip code","RESTON","2019","avg_lat_using_tests",10.171704340367
+20191,"zip code","RESTON","2019","avg_up_using_devices",85.3162476419256
+20191,"zip code","RESTON","2019","avg_up_using_tests",86.3208971247083
+20191,"zip code","RESTON","2019","devices",2733.31537461309
+20191,"zip code","RESTON","2019","tests",8362.86567993669
+20194,"zip code","RESTON","2019","avg_down_using_devices",143.421572538794
+20194,"zip code","RESTON","2019","avg_down_using_tests",146.583730400233
+20194,"zip code","RESTON","2019","avg_lat_using_devices",9.69944809170931
+20194,"zip code","RESTON","2019","avg_lat_using_tests",9.57608849134557
+20194,"zip code","RESTON","2019","avg_up_using_devices",99.4113584390987
+20194,"zip code","RESTON","2019","avg_up_using_tests",104.037759953886
+20194,"zip code","RESTON","2019","devices",1354.5519520128
+20194,"zip code","RESTON","2019","tests",4411.48353742663
+20196,"zip code","RESTON","2019","avg_down_using_devices",108.904176660797
+20196,"zip code","RESTON","2019","avg_down_using_tests",110.459359207179
+20196,"zip code","RESTON","2019","avg_lat_using_devices",13.2295170575526
+20196,"zip code","RESTON","2019","avg_lat_using_tests",16.0051684481469
+20196,"zip code","RESTON","2019","avg_up_using_devices",74.6105327094537
+20196,"zip code","RESTON","2019","avg_up_using_tests",73.0651229806312
+20196,"zip code","RESTON","2019","devices",0
+20196,"zip code","RESTON","2019","tests",0
+22003,"zip code","ANNANDALE","2019","avg_down_using_devices",124.920986499445
+22003,"zip code","ANNANDALE","2019","avg_down_using_tests",123.499210136569
+22003,"zip code","ANNANDALE","2019","avg_lat_using_devices",8.53911097691055
+22003,"zip code","ANNANDALE","2019","avg_lat_using_tests",8.51844090035253
+22003,"zip code","ANNANDALE","2019","avg_up_using_devices",99.1116774808394
+22003,"zip code","ANNANDALE","2019","avg_up_using_tests",99.5940177908363
+22003,"zip code","ANNANDALE","2019","devices",3445.96527120541
+22003,"zip code","ANNANDALE","2019","tests",11181.4077976003
+22015,"zip code","BURKE","2019","avg_down_using_devices",122.284619645346
+22015,"zip code","BURKE","2019","avg_down_using_tests",120.213732165717
+22015,"zip code","BURKE","2019","avg_lat_using_devices",8.66216804010079
+22015,"zip code","BURKE","2019","avg_lat_using_tests",8.57202578975239
+22015,"zip code","BURKE","2019","avg_up_using_devices",96.8221233469055
+22015,"zip code","BURKE","2019","avg_up_using_tests",95.3092848903567
+22015,"zip code","BURKE","2019","devices",2995.29232479639
+22015,"zip code","BURKE","2019","tests",9961.83052584185
+22027,"zip code","DUNN LORING","2019","avg_down_using_devices",119.676442989824
+22027,"zip code","DUNN LORING","2019","avg_down_using_tests",120.998825291351
+22027,"zip code","DUNN LORING","2019","avg_lat_using_devices",9.12247330797234
+22027,"zip code","DUNN LORING","2019","avg_lat_using_tests",8.44200256287704
+22027,"zip code","DUNN LORING","2019","avg_up_using_devices",89.3039325466876
+22027,"zip code","DUNN LORING","2019","avg_up_using_tests",88.5442730022559
+22027,"zip code","DUNN LORING","2019","devices",68.4135806348295
+22027,"zip code","DUNN LORING","2019","tests",199.852439769856
+22030,"zip code","FAIRFAX","2019","avg_down_using_devices",133.677987650321
+22030,"zip code","FAIRFAX","2019","avg_down_using_tests",134.04323921859
+22030,"zip code","FAIRFAX","2019","avg_lat_using_devices",9.54483602793494
+22030,"zip code","FAIRFAX","2019","avg_lat_using_tests",9.08942499477202
+22030,"zip code","FAIRFAX","2019","avg_up_using_devices",90.3120295387795
+22030,"zip code","FAIRFAX","2019","avg_up_using_tests",90.7159714725432
+22030,"zip code","FAIRFAX","2019","devices",3488.5831197236
+22030,"zip code","FAIRFAX","2019","tests",11336.1552089649
+22031,"zip code","FAIRFAX","2019","avg_down_using_devices",125.222781405238
+22031,"zip code","FAIRFAX","2019","avg_down_using_tests",123.796475267513
+22031,"zip code","FAIRFAX","2019","avg_lat_using_devices",8.92284045334776
+22031,"zip code","FAIRFAX","2019","avg_lat_using_tests",8.90339144061909
+22031,"zip code","FAIRFAX","2019","avg_up_using_devices",91.25906935587
+22031,"zip code","FAIRFAX","2019","avg_up_using_tests",89.890625755544
+22031,"zip code","FAIRFAX","2019","devices",1994.94748991457
+22031,"zip code","FAIRFAX","2019","tests",6222.67541308784
+22032,"zip code","FAIRFAX","2019","avg_down_using_devices",120.600300779017
+22032,"zip code","FAIRFAX","2019","avg_down_using_tests",121.543523372206
+22032,"zip code","FAIRFAX","2019","avg_lat_using_devices",9.30280342339901
+22032,"zip code","FAIRFAX","2019","avg_lat_using_tests",9.42073597538869
+22032,"zip code","FAIRFAX","2019","avg_up_using_devices",95.0306297290514
+22032,"zip code","FAIRFAX","2019","avg_up_using_tests",93.7658981438855
+22032,"zip code","FAIRFAX","2019","devices",1900.13879660499
+22032,"zip code","FAIRFAX","2019","tests",6329.77336566355
+22033,"zip code","FAIRFAX","2019","avg_down_using_devices",126.28196694309
+22033,"zip code","FAIRFAX","2019","avg_down_using_tests",127.851049718114
+22033,"zip code","FAIRFAX","2019","avg_lat_using_devices",9.53036171685987
+22033,"zip code","FAIRFAX","2019","avg_lat_using_tests",9.30164333692252
+22033,"zip code","FAIRFAX","2019","avg_up_using_devices",90.7879964819888
+22033,"zip code","FAIRFAX","2019","avg_up_using_tests",92.1190730957575
+22033,"zip code","FAIRFAX","2019","devices",2564.70987352934
+22033,"zip code","FAIRFAX","2019","tests",8619.28846259974
+22039,"zip code","FAIRFAX STATION","2019","avg_down_using_devices",122.346746030389
+22039,"zip code","FAIRFAX STATION","2019","avg_down_using_tests",120.842484041205
+22039,"zip code","FAIRFAX STATION","2019","avg_lat_using_devices",9.12628024295765
+22039,"zip code","FAIRFAX STATION","2019","avg_lat_using_tests",8.88224264813317
+22039,"zip code","FAIRFAX STATION","2019","avg_up_using_devices",91.4250615980348
+22039,"zip code","FAIRFAX STATION","2019","avg_up_using_tests",89.7898385360524
+22039,"zip code","FAIRFAX STATION","2019","devices",1602.08723356488
+22039,"zip code","FAIRFAX STATION","2019","tests",5062.47782177692
+22041,"zip code","FALLS CHURCH","2019","avg_down_using_devices",119.97278702529
+22041,"zip code","FALLS CHURCH","2019","avg_down_using_tests",121.601481295688
+22041,"zip code","FALLS CHURCH","2019","avg_lat_using_devices",9.63172581074535
+22041,"zip code","FALLS CHURCH","2019","avg_lat_using_tests",9.58397119357696
+22041,"zip code","FALLS CHURCH","2019","avg_up_using_devices",69.830932061008
+22041,"zip code","FALLS CHURCH","2019","avg_up_using_tests",69.6732263328155
+22041,"zip code","FALLS CHURCH","2019","devices",1294.3125579277
+22041,"zip code","FALLS CHURCH","2019","tests",3963.22708715662
+22042,"zip code","FALLS CHURCH","2019","avg_down_using_devices",118.493464758127
+22042,"zip code","FALLS CHURCH","2019","avg_down_using_tests",117.365302453838
+22042,"zip code","FALLS CHURCH","2019","avg_lat_using_devices",8.68033690295348
+22042,"zip code","FALLS CHURCH","2019","avg_lat_using_tests",8.77672139140237
+22042,"zip code","FALLS CHURCH","2019","avg_up_using_devices",89.0876599167272
+22042,"zip code","FALLS CHURCH","2019","avg_up_using_tests",88.1943085396144
+22042,"zip code","FALLS CHURCH","2019","devices",2554.20532472338
+22042,"zip code","FALLS CHURCH","2019","tests",7777.88726737418
+22043,"zip code","FALLS CHURCH","2019","avg_down_using_devices",126.202165407172
+22043,"zip code","FALLS CHURCH","2019","avg_down_using_tests",126.731855963539
+22043,"zip code","FALLS CHURCH","2019","avg_lat_using_devices",8.86605101541054
+22043,"zip code","FALLS CHURCH","2019","avg_lat_using_tests",8.81726291222277
+22043,"zip code","FALLS CHURCH","2019","avg_up_using_devices",97.045781484695
+22043,"zip code","FALLS CHURCH","2019","avg_up_using_tests",96.9672572564816
+22043,"zip code","FALLS CHURCH","2019","devices",2112.44525762464
+22043,"zip code","FALLS CHURCH","2019","tests",7055.1058638172
+22044,"zip code","FALLS CHURCH","2019","avg_down_using_devices",108.895312242861
+22044,"zip code","FALLS CHURCH","2019","avg_down_using_tests",110.921371271538
+22044,"zip code","FALLS CHURCH","2019","avg_lat_using_devices",10.1554793335255
+22044,"zip code","FALLS CHURCH","2019","avg_lat_using_tests",9.92167981466114
+22044,"zip code","FALLS CHURCH","2019","avg_up_using_devices",79.1956194575514
+22044,"zip code","FALLS CHURCH","2019","avg_up_using_tests",81.364913790184
+22044,"zip code","FALLS CHURCH","2019","devices",681.014481744111
+22044,"zip code","FALLS CHURCH","2019","tests",2047.29320493457
+22046,"zip code","FALLS CHURCH","2019","avg_down_using_devices",129.913516162474
+22046,"zip code","FALLS CHURCH","2019","avg_down_using_tests",132.601906117568
+22046,"zip code","FALLS CHURCH","2019","avg_lat_using_devices",9.38730401308012
+22046,"zip code","FALLS CHURCH","2019","avg_lat_using_tests",9.91007767039978
+22046,"zip code","FALLS CHURCH","2019","avg_up_using_devices",96.6474865277216
+22046,"zip code","FALLS CHURCH","2019","avg_up_using_tests",100.208441779259
+22046,"zip code","FALLS CHURCH","2019","devices",384.145868863104
+22046,"zip code","FALLS CHURCH","2019","tests",1297.34023909928
+22060,"zip code","FORT BELVOIR","2019","avg_down_using_devices",116.483713205274
+22060,"zip code","FORT BELVOIR","2019","avg_down_using_tests",112.791369843274
+22060,"zip code","FORT BELVOIR","2019","avg_lat_using_devices",10.9453591460851
+22060,"zip code","FORT BELVOIR","2019","avg_lat_using_tests",10.515718734084
+22060,"zip code","FORT BELVOIR","2019","avg_up_using_devices",70.8155742384108
+22060,"zip code","FORT BELVOIR","2019","avg_up_using_tests",67.4233808420741
+22060,"zip code","FORT BELVOIR","2019","devices",452.744012903897
+22060,"zip code","FORT BELVOIR","2019","tests",1796.30623851743
+22066,"zip code","GREAT FALLS","2019","avg_down_using_devices",119.370318413274
+22066,"zip code","GREAT FALLS","2019","avg_down_using_tests",118.74900792036
+22066,"zip code","GREAT FALLS","2019","avg_lat_using_devices",8.4871461754293
+22066,"zip code","GREAT FALLS","2019","avg_lat_using_tests",8.09880822887771
+22066,"zip code","GREAT FALLS","2019","avg_up_using_devices",97.0933720911076
+22066,"zip code","GREAT FALLS","2019","avg_up_using_tests",99.2717597539975
+22066,"zip code","GREAT FALLS","2019","devices",1687.8232637958
+22066,"zip code","GREAT FALLS","2019","tests",6529.86814124046
+22079,"zip code","LORTON","2019","avg_down_using_devices",128.996988140244
+22079,"zip code","LORTON","2019","avg_down_using_tests",127.076125154604
+22079,"zip code","LORTON","2019","avg_lat_using_devices",12.4003987969886
+22079,"zip code","LORTON","2019","avg_lat_using_tests",10.1033661631468
+22079,"zip code","LORTON","2019","avg_up_using_devices",98.647598732254
+22079,"zip code","LORTON","2019","avg_up_using_tests",96.9456663734439
+22079,"zip code","LORTON","2019","devices",2742.7379053263
+22079,"zip code","LORTON","2019","tests",9417.28854800356
+22101,"zip code","MCLEAN","2019","avg_down_using_devices",113.6207215771
+22101,"zip code","MCLEAN","2019","avg_down_using_tests",116.972714307034
+22101,"zip code","MCLEAN","2019","avg_lat_using_devices",8.90629980460462
+22101,"zip code","MCLEAN","2019","avg_lat_using_tests",8.68612794841105
+22101,"zip code","MCLEAN","2019","avg_up_using_devices",95.6588905347442
+22101,"zip code","MCLEAN","2019","avg_up_using_tests",97.0438774509961
+22101,"zip code","MCLEAN","2019","devices",2792.30173770011
+22101,"zip code","MCLEAN","2019","tests",9487.93509023582
+22102,"zip code","MCLEAN","2019","avg_down_using_devices",118.418915220318
+22102,"zip code","MCLEAN","2019","avg_down_using_tests",116.358827063827
+22102,"zip code","MCLEAN","2019","avg_lat_using_devices",10.5476204866332
+22102,"zip code","MCLEAN","2019","avg_lat_using_tests",11.1084916462258
+22102,"zip code","MCLEAN","2019","avg_up_using_devices",89.3496681996847
+22102,"zip code","MCLEAN","2019","avg_up_using_tests",86.4282883959823
+22102,"zip code","MCLEAN","2019","devices",797.171736986109
+22102,"zip code","MCLEAN","2019","tests",3173.75019964121
+22124,"zip code","OAKTON","2019","avg_down_using_devices",120.698754687219
+22124,"zip code","OAKTON","2019","avg_down_using_tests",118.435415199657
+22124,"zip code","OAKTON","2019","avg_lat_using_devices",9.55234617510662
+22124,"zip code","OAKTON","2019","avg_lat_using_tests",9.75356241004766
+22124,"zip code","OAKTON","2019","avg_up_using_devices",86.0421004411445
+22124,"zip code","OAKTON","2019","avg_up_using_tests",85.9268781594972
+22124,"zip code","OAKTON","2019","devices",1757.12853273416
+22124,"zip code","OAKTON","2019","tests",6146.85922219298
+22150,"zip code","SPRINGFIELD","2019","avg_down_using_devices",115.490068592365
+22150,"zip code","SPRINGFIELD","2019","avg_down_using_tests",119.09182206822
+22150,"zip code","SPRINGFIELD","2019","avg_lat_using_devices",12.0450676861578
+22150,"zip code","SPRINGFIELD","2019","avg_lat_using_tests",10.5515438968199
+22150,"zip code","SPRINGFIELD","2019","avg_up_using_devices",84.363635740989
+22150,"zip code","SPRINGFIELD","2019","avg_up_using_tests",88.3345145925564
+22150,"zip code","SPRINGFIELD","2019","devices",1309.40078542705
+22150,"zip code","SPRINGFIELD","2019","tests",3917.03913516197
+22151,"zip code","SPRINGFIELD","2019","avg_down_using_devices",116.57004123294
+22151,"zip code","SPRINGFIELD","2019","avg_down_using_tests",122.574605311611
+22151,"zip code","SPRINGFIELD","2019","avg_lat_using_devices",8.63805966061692
+22151,"zip code","SPRINGFIELD","2019","avg_lat_using_tests",8.55319388513314
+22151,"zip code","SPRINGFIELD","2019","avg_up_using_devices",95.459735091983
+22151,"zip code","SPRINGFIELD","2019","avg_up_using_tests",98.8890869106481
+22151,"zip code","SPRINGFIELD","2019","devices",1107.10916386152
+22151,"zip code","SPRINGFIELD","2019","tests",3661.5319419768
+22152,"zip code","SPRINGFIELD","2019","avg_down_using_devices",118.678027208607
+22152,"zip code","SPRINGFIELD","2019","avg_down_using_tests",118.963534762081
+22152,"zip code","SPRINGFIELD","2019","avg_lat_using_devices",8.61924225090593
+22152,"zip code","SPRINGFIELD","2019","avg_lat_using_tests",8.45941461829221
+22152,"zip code","SPRINGFIELD","2019","avg_up_using_devices",100.660261057077
+22152,"zip code","SPRINGFIELD","2019","avg_up_using_tests",101.218265260132
+22152,"zip code","SPRINGFIELD","2019","devices",1810.73278066549
+22152,"zip code","SPRINGFIELD","2019","tests",6101.95095202842
+22153,"zip code","SPRINGFIELD","2019","avg_down_using_devices",121.089604395282
+22153,"zip code","SPRINGFIELD","2019","avg_down_using_tests",122.463592897094
+22153,"zip code","SPRINGFIELD","2019","avg_lat_using_devices",9.09845341151072
+22153,"zip code","SPRINGFIELD","2019","avg_lat_using_tests",8.67781476817599
+22153,"zip code","SPRINGFIELD","2019","avg_up_using_devices",100.989019844992
+22153,"zip code","SPRINGFIELD","2019","avg_up_using_tests",99.8026571024054
+22153,"zip code","SPRINGFIELD","2019","devices",2294.34659733938
+22153,"zip code","SPRINGFIELD","2019","tests",7261.75772426062
+22180,"zip code","VIENNA","2019","avg_down_using_devices",121.066817106361
+22180,"zip code","VIENNA","2019","avg_down_using_tests",123.898594969423
+22180,"zip code","VIENNA","2019","avg_lat_using_devices",9.80106615222497
+22180,"zip code","VIENNA","2019","avg_lat_using_tests",9.39386530235438
+22180,"zip code","VIENNA","2019","avg_up_using_devices",93.1312042868145
+22180,"zip code","VIENNA","2019","avg_up_using_tests",96.185300466973
+22180,"zip code","VIENNA","2019","devices",1714.69788336867
+22180,"zip code","VIENNA","2019","tests",5395.0275849399
+22181,"zip code","VIENNA","2019","avg_down_using_devices",130.551944429269
+22181,"zip code","VIENNA","2019","avg_down_using_tests",129.952142969001
+22181,"zip code","VIENNA","2019","avg_lat_using_devices",8.99593401483748
+22181,"zip code","VIENNA","2019","avg_lat_using_tests",8.91152714616251
+22181,"zip code","VIENNA","2019","avg_up_using_devices",98.6192677180173
+22181,"zip code","VIENNA","2019","avg_up_using_tests",98.2884092453044
+22181,"zip code","VIENNA","2019","devices",1342.3629782719
+22181,"zip code","VIENNA","2019","tests",4763.75210269213
+22182,"zip code","VIENNA","2019","avg_down_using_devices",117.630677319195
+22182,"zip code","VIENNA","2019","avg_down_using_tests",119.908303383332
+22182,"zip code","VIENNA","2019","avg_lat_using_devices",9.36602235389893
+22182,"zip code","VIENNA","2019","avg_lat_using_tests",9.07319871423289
+22182,"zip code","VIENNA","2019","avg_up_using_devices",94.8967287019058
+22182,"zip code","VIENNA","2019","avg_up_using_tests",98.5845183177397
+22182,"zip code","VIENNA","2019","devices",2602.32627217361
+22182,"zip code","VIENNA","2019","tests",8489.71524714102
+22203,"zip code","ARLINGTON","2019","avg_down_using_devices",109.990807244071
+22203,"zip code","ARLINGTON","2019","avg_down_using_tests",106.902192518252
+22203,"zip code","ARLINGTON","2019","avg_lat_using_devices",9.55889575099382
+22203,"zip code","ARLINGTON","2019","avg_lat_using_tests",9.01967438995491
+22203,"zip code","ARLINGTON","2019","avg_up_using_devices",99.4977182749735
+22203,"zip code","ARLINGTON","2019","avg_up_using_tests",95.7918427832514
+22203,"zip code","ARLINGTON","2019","devices",8.86799704783432
+22203,"zip code","ARLINGTON","2019","tests",29.9121549476196
+22204,"zip code","ARLINGTON","2019","avg_down_using_devices",117.494275430167
+22204,"zip code","ARLINGTON","2019","avg_down_using_tests",116.905646110007
+22204,"zip code","ARLINGTON","2019","avg_lat_using_devices",9.99226492409044
+22204,"zip code","ARLINGTON","2019","avg_lat_using_tests",9.98079258649044
+22204,"zip code","ARLINGTON","2019","avg_up_using_devices",51.1688603489378
+22204,"zip code","ARLINGTON","2019","avg_up_using_tests",48.0155460198684
+22204,"zip code","ARLINGTON","2019","devices",50.0342136959259
+22204,"zip code","ARLINGTON","2019","tests",146.893987842481
+22206,"zip code","ARLINGTON","2019","avg_down_using_devices",119.168469601192
+22206,"zip code","ARLINGTON","2019","avg_down_using_tests",121.189463486965
+22206,"zip code","ARLINGTON","2019","avg_lat_using_devices",11.370985023156
+22206,"zip code","ARLINGTON","2019","avg_lat_using_tests",11.2795591824825
+22206,"zip code","ARLINGTON","2019","avg_up_using_devices",36.940532962373
+22206,"zip code","ARLINGTON","2019","avg_up_using_tests",39.6045995371329
+22206,"zip code","ARLINGTON","2019","devices",138.469507059355
+22206,"zip code","ARLINGTON","2019","tests",407.572036332403
+22207,"zip code","ARLINGTON","2019","avg_down_using_devices",110.868714457365
+22207,"zip code","ARLINGTON","2019","avg_down_using_tests",112.231740570208
+22207,"zip code","ARLINGTON","2019","avg_lat_using_devices",8.34974007971343
+22207,"zip code","ARLINGTON","2019","avg_lat_using_tests",8.06470060261766
+22207,"zip code","ARLINGTON","2019","avg_up_using_devices",93.9731989121911
+22207,"zip code","ARLINGTON","2019","avg_up_using_tests",95.0629358350198
+22207,"zip code","ARLINGTON","2019","devices",19.8031987850831
+22207,"zip code","ARLINGTON","2019","tests",68.6877539398267
+22213,"zip code","ARLINGTON","2019","avg_down_using_devices",120.576713807584
+22213,"zip code","ARLINGTON","2019","avg_down_using_tests",124.862035770236
+22213,"zip code","ARLINGTON","2019","avg_lat_using_devices",8.27359958018042
+22213,"zip code","ARLINGTON","2019","avg_lat_using_tests",8.07899458495379
+22213,"zip code","ARLINGTON","2019","avg_up_using_devices",102.426535336439
+22213,"zip code","ARLINGTON","2019","avg_up_using_tests",103.717609485881
+22213,"zip code","ARLINGTON","2019","devices",3.33943943271861
+22213,"zip code","ARLINGTON","2019","tests",12.036033337797
+22302,"zip code","ALEXANDRIA","2019","avg_down_using_devices",119.168469601192
+22302,"zip code","ALEXANDRIA","2019","avg_down_using_tests",121.189463486965
+22302,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",11.370985023156
+22302,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",11.2795591824825
+22302,"zip code","ALEXANDRIA","2019","avg_up_using_devices",36.940532962373
+22302,"zip code","ALEXANDRIA","2019","avg_up_using_tests",39.6045995371329
+22302,"zip code","ALEXANDRIA","2019","devices",223.972536008574
+22302,"zip code","ALEXANDRIA","2019","tests",659.242200843668
+22303,"zip code","ALEXANDRIA","2019","avg_down_using_devices",132.669153289304
+22303,"zip code","ALEXANDRIA","2019","avg_down_using_tests",133.386949426114
+22303,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",12.2999585508696
+22303,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",13.3263369685016
+22303,"zip code","ALEXANDRIA","2019","avg_up_using_devices",73.0605039864785
+22303,"zip code","ALEXANDRIA","2019","avg_up_using_tests",73.1167332312763
+22303,"zip code","ALEXANDRIA","2019","devices",1357.55563190582
+22303,"zip code","ALEXANDRIA","2019","tests",4682.52747791368
+22304,"zip code","ALEXANDRIA","2019","avg_down_using_devices",127.26698236833
+22304,"zip code","ALEXANDRIA","2019","avg_down_using_tests",128.29758112441
+22304,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",8.02503149533274
+22304,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",8.42218289351283
+22304,"zip code","ALEXANDRIA","2019","avg_up_using_devices",95.5928975405891
+22304,"zip code","ALEXANDRIA","2019","avg_up_using_tests",91.2332865316665
+22304,"zip code","ALEXANDRIA","2019","devices",39.8103123899688
+22304,"zip code","ALEXANDRIA","2019","tests",197.981097589156
+22306,"zip code","ALEXANDRIA","2019","avg_down_using_devices",133.983377064855
+22306,"zip code","ALEXANDRIA","2019","avg_down_using_tests",133.564681218151
+22306,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",10.8340214002438
+22306,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",10.1534597498595
+22306,"zip code","ALEXANDRIA","2019","avg_up_using_devices",87.7547354666682
+22306,"zip code","ALEXANDRIA","2019","avg_up_using_tests",86.0373805652819
+22306,"zip code","ALEXANDRIA","2019","devices",1748.3800455213
+22306,"zip code","ALEXANDRIA","2019","tests",5563.96567276738
+22307,"zip code","ALEXANDRIA","2019","avg_down_using_devices",132.021072967571
+22307,"zip code","ALEXANDRIA","2019","avg_down_using_tests",134.082901659612
+22307,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",13.3105612311436
+22307,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",13.5046095839493
+22307,"zip code","ALEXANDRIA","2019","avg_up_using_devices",86.4392408165921
+22307,"zip code","ALEXANDRIA","2019","avg_up_using_tests",87.5880717374132
+22307,"zip code","ALEXANDRIA","2019","devices",803.691779557487
+22307,"zip code","ALEXANDRIA","2019","tests",2429.51105342456
+22308,"zip code","ALEXANDRIA","2019","avg_down_using_devices",128.87650854506
+22308,"zip code","ALEXANDRIA","2019","avg_down_using_tests",129.338655733975
+22308,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",9.31738167811405
+22308,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",9.20012539179516
+22308,"zip code","ALEXANDRIA","2019","avg_up_using_devices",94.2047430667816
+22308,"zip code","ALEXANDRIA","2019","avg_up_using_tests",94.0812679875373
+22308,"zip code","ALEXANDRIA","2019","devices",1085.38458706283
+22308,"zip code","ALEXANDRIA","2019","tests",3487.76741006965
+22309,"zip code","ALEXANDRIA","2019","avg_down_using_devices",129.931972746328
+22309,"zip code","ALEXANDRIA","2019","avg_down_using_tests",133.503575830589
+22309,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",11.1008001896035
+22309,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",10.6608064602251
+22309,"zip code","ALEXANDRIA","2019","avg_up_using_devices",94.4042107124518
+22309,"zip code","ALEXANDRIA","2019","avg_up_using_tests",97.6961983270247
+22309,"zip code","ALEXANDRIA","2019","devices",1842.07714702816
+22309,"zip code","ALEXANDRIA","2019","tests",6155.86497396135
+22310,"zip code","ALEXANDRIA","2019","avg_down_using_devices",132.578948856945
+22310,"zip code","ALEXANDRIA","2019","avg_down_using_tests",133.294387107271
+22310,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",9.47938575302376
+22310,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",9.04069024317354
+22310,"zip code","ALEXANDRIA","2019","avg_up_using_devices",101.040815267007
+22310,"zip code","ALEXANDRIA","2019","avg_up_using_tests",101.738901057177
+22310,"zip code","ALEXANDRIA","2019","devices",2119.78145265133
+22310,"zip code","ALEXANDRIA","2019","tests",7180.72236417221
+22311,"zip code","ALEXANDRIA","2019","avg_down_using_devices",122.131589932507
+22311,"zip code","ALEXANDRIA","2019","avg_down_using_tests",120.809693945341
+22311,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",10.3259551149412
+22311,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",10.2215986794078
+22311,"zip code","ALEXANDRIA","2019","avg_up_using_devices",64.221963163305
+22311,"zip code","ALEXANDRIA","2019","avg_up_using_tests",56.43718041678
+22311,"zip code","ALEXANDRIA","2019","devices",162.192646640932
+22311,"zip code","ALEXANDRIA","2019","tests",477.427091733911
+22312,"zip code","ALEXANDRIA","2019","avg_down_using_devices",121.565852504874
+22312,"zip code","ALEXANDRIA","2019","avg_down_using_tests",122.569238463302
+22312,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",9.17281062018397
+22312,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",9.01802886592202
+22312,"zip code","ALEXANDRIA","2019","avg_up_using_devices",77.297538022263
+22312,"zip code","ALEXANDRIA","2019","avg_up_using_tests",77.6374738946527
+22312,"zip code","ALEXANDRIA","2019","devices",1796.73259394694
+22312,"zip code","ALEXANDRIA","2019","tests",6107.82017351317
+22315,"zip code","ALEXANDRIA","2019","avg_down_using_devices",137.07702207431
+22315,"zip code","ALEXANDRIA","2019","avg_down_using_tests",136.374564656093
+22315,"zip code","ALEXANDRIA","2019","avg_lat_using_devices",9.46902473362315
+22315,"zip code","ALEXANDRIA","2019","avg_lat_using_tests",9.36396501207962
+22315,"zip code","ALEXANDRIA","2019","avg_up_using_devices",96.4133777339196
+22315,"zip code","ALEXANDRIA","2019","avg_up_using_tests",97.0812004544043
+22315,"zip code","ALEXANDRIA","2019","devices",2414.51545487649
+22315,"zip code","ALEXANDRIA","2019","tests",8333.39051094991
