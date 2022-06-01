@@ -47,7 +47,6 @@ dc_dbWriteTable <-
 geo_infos <- sf::st_read("~/Github/dc.geographies/data/va059_geo_ffxct_gis_2022_supervisor_districts/distribution/va059_geo_ffxct_gis_2022_supervisor_districts.geojson")
 
 
-
 ## upload demographic characteristics per parcels
 # Load demographics data per parcels
 con <- get_db_conn()
@@ -65,53 +64,90 @@ fairfax_acs_dmg_dt_geo$bg_geoid <- substr(fairfax_acs_dmg_dt_geo$geoid, 1, 12)
 # Estimate the demographics information by  result by human services regions
 fairfax_dmg_dt_geo <- fairfax_acs_dmg_dt %>%
   select(geoid=geoid.x,
+         total_pop,
          region_name,
          afr_amer_alone,
          amr_ind_alone,
          asian_alone,
          wht_alone,
+         hispanic,
          male,
-         male0_4,
-         male5_9,
-         male10_14,
-         male15_17,
          female,
-         female0_4,
-         female5_9,
-         female10_14,
-         female15_17,
+         pop_under_20,
+         pop_20_64,
+         pop_65_plus,
          geometry) %>%
   group_by(geoid) %>%
-  summarise(afr_amer_alone = sum(afr_amer_alone, na.rm=T),
+  summarise(total_pop = sum(total_pop, na.rm=T),
+            afr_amer_alone = sum(afr_amer_alone, na.rm=T),
             amr_ind_alone = sum(amr_ind_alone, na.rm=T),
             asian_alone = sum(asian_alone, na.rm=T),
             wht_alone = sum(wht_alone, na.rm=T),
+            hispanic = sum(hispanic, na.rm=T),
             male = sum(male, na.rm=T),
-            male0_4 = sum(male0_4, na.rm=T),
-            male5_9 = sum(male5_9, na.rm=T),
-            male10_14 = sum(male10_14, na.rm=T),
-            male15_17 = sum(male15_17, na.rm=T),
             female = sum(female, na.rm=T),
-            female0_4 = sum(female0_4, na.rm=T),
-            female5_9 = sum(female5_9, na.rm=T),
-            female10_14 = sum(female10_14, na.rm=T),
-            female15_17 = sum(female15_17, na.rm=T))
+            pop_under_20 = sum(pop_under_20, na.rm=T),
+            pop_20_64 = sum(pop_20_64, na.rm=T),
+            pop_65_plus = sum(pop_65_plus, na.rm=T))
 
 # Compute the percentage (not the overall size of the population) by new geography 
-fairfax_dmg_dt_geo <- fairfax_dmg_dt_geo %>% mutate(prct_afr_amer_alone = afr_amer_alone/sum(afr_amer_alone),
+fairfax_dmg_dt_geo <- fairfax_dmg_dt_geo %>% mutate(prct_total_pop = total_pop/sum(total_pop),
+                                                    prct_afr_amer_alone = afr_amer_alone/sum(afr_amer_alone),
                                                     prct_amr_ind_alone = amr_ind_alone/sum(amr_ind_alone),
                                                     prct_asian_alone = asian_alone/sum(asian_alone),
                                                     prct_wht_alone = wht_alone/sum(wht_alone),
+                                                    prct_hispanic = hispanic/sum(hispanic),
                                                     prct_male = male/sum(male),
-                                                    prct_male0_4 = male0_4/sum(male0_4),
-                                                    prct_male5_9 = male5_9/sum(male5_9),
-                                                    prct_male10_14 = male10_14/sum(male10_14),
-                                                    prct_male15_17 = male15_17/sum(male15_17),
                                                     prct_female = female/sum(female),
-                                                    prct_female0_4 = female0_4/sum(female0_4),
-                                                    prct_female5_9 = female5_9/sum(female5_9),
-                                                    prct_female10_14 = female10_14/sum(female10_14),
-                                                    prct_female15_17 = female15_17/sum(female15_17))
+                                                    prct_pop_under_20 = pop_under_20/sum(pop_under_20),
+                                                    prct_pop_20_64 = pop_20_64/sum(pop_20_64),
+                                                    prct_pop_65_plus = pop_65_plus/sum(pop_65_plus))
+
+
+# rename all variables
+fairfax_dmg_dt_geo <- fairfax_dmg_dt_geo %>% 
+  rename(pop_black = "afr_amer_alone",
+         pop_native = "amr_ind_alone",
+         pop_AAPI = "asian_alone",
+         pop_white = "wht_alone",
+         pop_hispanic_or_latino = "hispanic",
+         pop_male = "male",
+         pop_female = "female",
+         pop_under_20 = "pop_under_20",
+         pop_20_64 = "pop_20_64",
+         pop_65_plus = "pop_65_plus",
+         perc_black = "prct_afr_amer_alone",
+         perc_native = "prct_amr_ind_alone",
+         perc_AAPI = "prct_asian_alone",
+         perc_white = "prct_wht_alone",
+         perc_hispanic_or_latino = "prct_hispanic",
+         perc_male = "prct_male",
+         perc_female = "prct_female",
+         perc_under_20 = "prct_pop_under_20",
+         perc_20_64 = "prct_pop_20_64",
+         perc_65_plus = "prct_pop_65_plus")
+
+# Comments: devices are distributed according to the proportion of living units.
+plot(fairfax_dmg_dt_geo['perc_under_20'])
+
+# Cast long
+fairfax_dmg_dt_geo <- data.table::as.data.table(fairfax_dmg_dt_geo)
+fairfax_dmg_dt_geo$geometry <- NULL
+
+fairfax_dmg_dt_geo_long <-  melt(setDT(fairfax_dmg_dt_geo), id.vars = c("geoid"))
+geo_infos_id <- data.table::as.data.table(geo_infos) %>% select(geoid,region_name,region_type,year)
+
+fairfax_dmg_dt_geo_long <- merge(fairfax_dmg_dt_geo_long, geo_infos_id, by="geoid")
+fairfax_dmg_dt_geo_long <- fairfax_dmg_dt_geo_long %>% select(geoid,region_type,region_name,year,variable,value)
+colnames(fairfax_dmg_dt_geo_long) <- c("geoid", "region_type", "region_name", "year", "measure","value")
+
+# change variables names and year
+fairfax_dmg_dt_geo_long$year <- "2019"
+
+# save to DB
+write.csv(fairfax_dmg_dt_geo_long,"~/Github/dc.sdad.demographics/data/va059_spd_sdad_2019_demographics.csv", row.names = FALSE)
+
+
 
 
 ## add broadband measure
@@ -122,8 +158,6 @@ ookla_va_bg <- RPostgreSQL::dbGetQuery(conn = con,
                                        statement = "SELECT * FROM dc_digital_communications.va_bg_ookla_2019_2021_speed_measurements")
 ookla_va_bg <- st_read(con, query = "SELECT * FROM dc_digital_communications.va_bg_ookla_2019_2021_speed_measurements")
 DBI::dbDisconnect(con)
-
-# filter the year (same year than the census)
 
 # identify the fairfax county measure in 2019.
 ookla_va_bg <- ookla_va_bg %>% filter(year==2019)
@@ -162,34 +196,23 @@ ookla_fairfax_new_geo_dt_wide <- ookla_fairfax_geo_dt_wide_geo %>%
 # Comments: devices are distributed according to the proportion of living units.
 plot(ookla_fairfax_new_geo_dt_wide['devices'])
 
-
-
 ## Combine demographics and broadband information/ cast long
 ookla_fairfax_dt_wide <- data.table::as.data.table(ookla_fairfax_new_geo_dt_wide)
-dmg_fairfax_dt_wide <- data.table::as.data.table(fairfax_dmg_dt_geo)
 ookla_fairfax_dt_wide$geometry <- NULL
-dmg_fairfax_dt_wide$geometry <- NULL
-
-
 
 # merge the two data
-fairfax_supervisor_district_dt <- merge(dmg_fairfax_dt_wide, ookla_fairfax_dt_wide, by="geoid")
+fairfax_human_services_regions_dt <- merge(dmg_fairfax_dt_wide, ookla_fairfax_dt_wide, by="geoid")
 
 # Cast long
-fairfax_supervisor_district_dt_long <-  melt(setDT(fairfax_supervisor_district_dt), id.vars = c("geoid"))
-fairfax_supervisor_district_dt_long$year <- 2019
-fairfax_supervisor_district_dt_long$state <- "51"
-fairfax_supervisor_district_dt_long$county <- "059"
-fairfax_supervisor_district_dt_long$geography <- "supervisor districts"
+ookla_fairfax_dt_wide_long <-  melt(setDT(ookla_fairfax_dt_wide), id.vars = c("geoid"))
+geo_infos_id <- data.table::as.data.table(geo_infos) %>% select(geoid,region_name,region_type,year)
 
-# change variable position and rename
-fairfax_supervisor_district_dt_long <- fairfax_supervisor_district_dt_long %>% select(year,state,county,geography,variable,value)
-colnames(fairfax_supervisor_district_dt_long) <- c("year", "state", "county", "geography", "variables","value")
+ookla_fairfax_dt_wide_long <- merge(ookla_fairfax_dt_wide_long, geo_infos_id, by="geoid")
+ookla_fairfax_dt_wide_long <- ookla_fairfax_dt_wide_long %>% select(geoid,region_type,region_name,year,variable,value)
+colnames(ookla_fairfax_dt_wide_long) <- c("geoid", "region_type", "region_name", "year", "measure","value")
 
+# change variables names and year
+ookla_fairfax_dt_wide_long$year <- "2019"
 
 # save to DB
-#con <- get_db_conn()
-#dc_dbWriteTable(con, "dc_working", "fairfax_supervisor_district", fairfax_supervisor_district_dt_long)
-#DBI::dbDisconnect(con)
-
-
+write.csv(ookla_fairfax_dt_wide_long,"~/Github/dc.ookla.broadband/data/va059_spd_sdad_2019_speed_measurements.csv", row.names = FALSE)
