@@ -158,18 +158,74 @@ ookla_va_bg <- st_read(con, query = "SELECT * FROM dc_digital_communications.va_
 DBI::dbDisconnect(con)
 
 # identify the fairfax county measure in 2019.
-ookla_va_bg <- ookla_va_bg %>% filter(year==2019)
-ookla_fairfax_bg <- ookla_va_bg %>% filter(str_detect(region_name, "Fairfax"))
+ookla_va_bg_2019 <- ookla_va_bg %>% filter(year==2019)
+ookla_va_bg_2020 <- ookla_va_bg %>% filter(year==2020)
+ookla_va_bg_2021 <- ookla_va_bg %>% filter(year==2021)
+
+ookla_fairfax_bg_2019 <- ookla_va_bg_2019 %>% filter(str_detect(region_name, "Fairfax"))
+ookla_fairfax_bg_2020 <- ookla_va_bg_2020 %>% filter(str_detect(region_name, "Fairfax"))
+ookla_fairfax_bg_2021 <- ookla_va_bg_2021 %>% filter(str_detect(region_name, "Fairfax"))
 
 # reshape long to wide
-ookla_fairfax_bg_dt <- data.table::as.data.table(ookla_fairfax_bg)
-ookla_fairfax_bg_dt_wide <-  data.table::dcast(ookla_fairfax_bg_dt, geoid ~ measure, value.var = "value")
+ookla_fairfax_bg_dt_2019 <- data.table::as.data.table(ookla_fairfax_bg_2019)
+ookla_fairfax_bg_dt_2020 <- data.table::as.data.table(ookla_fairfax_bg_2020)
+ookla_fairfax_bg_dt_2021 <- data.table::as.data.table(ookla_fairfax_bg_2021)
+
+ookla_fairfax_bg_dt_wide_2019 <-  data.table::dcast(ookla_fairfax_bg_dt_2019, geoid ~ measure, value.var = "value")
+ookla_fairfax_bg_dt_wide_2020 <-  data.table::dcast(ookla_fairfax_bg_dt_2020, geoid ~ measure, value.var = "value")
+ookla_fairfax_bg_dt_wide_2021 <-  data.table::dcast(ookla_fairfax_bg_dt_2021, geoid ~ measure, value.var = "value")
 
 # add geography and parcels. After the merge parcels within the same block group have the same broadband speed.
-ookla_fairfax_geo_dt_wide_geo <- merge(fairfax_acs_dmg_dt_geo, ookla_fairfax_bg_dt_wide, by.x = "bg_geoid", by.y="geoid")
+ookla_fairfax_geo_dt_wide_geo_2019 <- merge(fairfax_acs_dmg_dt_geo, ookla_fairfax_bg_dt_wide_2019, by.x = "bg_geoid", by.y="geoid")
+ookla_fairfax_geo_dt_wide_geo_2020 <- merge(fairfax_acs_dmg_dt_geo, ookla_fairfax_bg_dt_wide_2020, by.x = "bg_geoid", by.y="geoid")
+ookla_fairfax_geo_dt_wide_geo_2021 <- merge(fairfax_acs_dmg_dt_geo, ookla_fairfax_bg_dt_wide_2021, by.x = "bg_geoid", by.y="geoid")
 
 # aggregate the broadband measure to the new geography
-ookla_fairfax_new_geo_dt_wide <- ookla_fairfax_geo_dt_wide_geo %>%
+ookla_fairfax_new_geo_dt_wide_2019 <- ookla_fairfax_geo_dt_wide_geo_2019 %>%
+  select(geoid=new_geoid,
+         mult,
+         avg_down_using_devices,
+         avg_down_using_tests,
+         avg_lat_using_devices,
+         avg_lat_using_tests,
+         avg_up_using_devices,
+         avg_up_using_tests,
+         devices,
+         tests,
+         geometry) %>%
+  group_by(geoid) %>%
+  summarise(avg_down_using_devices = mean(avg_down_using_devices, na.rm=T),
+            avg_down_using_tests = mean(avg_down_using_tests, na.rm=T),
+            avg_lat_using_devices = mean(avg_lat_using_devices, na.rm=T),
+            avg_lat_using_tests = mean(avg_lat_using_tests, na.rm=T),
+            avg_up_using_devices = mean(avg_up_using_devices, na.rm=T),
+            avg_up_using_tests = mean(avg_up_using_tests, na.rm=T),
+            devices = sum(mult*devices, na.rm=T),
+            tests = sum(mult*tests, na.rm=T))
+
+ookla_fairfax_new_geo_dt_wide_2020 <- ookla_fairfax_geo_dt_wide_geo_2020 %>%
+  select(geoid=new_geoid,
+         mult,
+         avg_down_using_devices,
+         avg_down_using_tests,
+         avg_lat_using_devices,
+         avg_lat_using_tests,
+         avg_up_using_devices,
+         avg_up_using_tests,
+         devices,
+         tests,
+         geometry) %>%
+  group_by(geoid) %>%
+  summarise(avg_down_using_devices = mean(avg_down_using_devices, na.rm=T),
+            avg_down_using_tests = mean(avg_down_using_tests, na.rm=T),
+            avg_lat_using_devices = mean(avg_lat_using_devices, na.rm=T),
+            avg_lat_using_tests = mean(avg_lat_using_tests, na.rm=T),
+            avg_up_using_devices = mean(avg_up_using_devices, na.rm=T),
+            avg_up_using_tests = mean(avg_up_using_tests, na.rm=T),
+            devices = sum(mult*devices, na.rm=T),
+            tests = sum(mult*tests, na.rm=T))
+
+ookla_fairfax_new_geo_dt_wide_2021 <- ookla_fairfax_geo_dt_wide_geo_2021 %>%
   select(geoid=new_geoid,
          mult,
          avg_down_using_devices,
@@ -192,27 +248,48 @@ ookla_fairfax_new_geo_dt_wide <- ookla_fairfax_geo_dt_wide_geo %>%
             tests = sum(mult*tests, na.rm=T))
 
 # Comments: devices are distributed according to the proportion of living units.
-plot(ookla_fairfax_new_geo_dt_wide['devices'])
-
+plot(ookla_fairfax_new_geo_dt_wide_2019['devices'])
 
 ## Combine demographics and broadband information/ cast long
-ookla_fairfax_dt_wide <- data.table::as.data.table(ookla_fairfax_new_geo_dt_wide)
-ookla_fairfax_dt_wide$geometry <- NULL
+ookla_fairfax_dt_wide_2019 <- data.table::as.data.table(ookla_fairfax_new_geo_dt_wide_2019)
+ookla_fairfax_dt_wide_2019$geometry <- NULL
+
+ookla_fairfax_dt_wide_2020 <- data.table::as.data.table(ookla_fairfax_new_geo_dt_wide_2020)
+ookla_fairfax_dt_wide_2020$geometry <- NULL
+
+ookla_fairfax_dt_wide_2021 <- data.table::as.data.table(ookla_fairfax_new_geo_dt_wide_2021)
+ookla_fairfax_dt_wide_2021$geometry <- NULL
 
 # merge the two data
-fairfax_human_services_regions_dt <- merge(dmg_fairfax_dt_wide, ookla_fairfax_dt_wide, by="geoid")
+fairfax_human_services_regions_dt_2019 <- merge(dmg_fairfax_dt_wide_2019, ookla_fairfax_dt_wide_2019, by="geoid")
+fairfax_human_services_regions_dt_2020 <- merge(dmg_fairfax_dt_wide_2020, ookla_fairfax_dt_wide_2020, by="geoid")
+fairfax_human_services_regions_dt_2021 <- merge(dmg_fairfax_dt_wide_2021, ookla_fairfax_dt_wide_2021, by="geoid")
 
-# Cast long
-ookla_fairfax_dt_wide_long <-  melt(setDT(ookla_fairfax_dt_wide), id.vars = c("geoid"))
+ookla_fairfax_dt_wide_long_2019 <-  melt(setDT(ookla_fairfax_dt_wide_2019), id.vars = c("geoid"))
+ookla_fairfax_dt_wide_long_2020 <-  melt(setDT(ookla_fairfax_dt_wide_2020), id.vars = c("geoid"))
+ookla_fairfax_dt_wide_long_2021 <-  melt(setDT(ookla_fairfax_dt_wide_2021), id.vars = c("geoid"))
 geo_infos_id <- data.table::as.data.table(geo_infos) %>% select(geoid,region_name,region_type,year)
 
-ookla_fairfax_dt_wide_long <- merge(ookla_fairfax_dt_wide_long, geo_infos_id, by="geoid")
-ookla_fairfax_dt_wide_long <- ookla_fairfax_dt_wide_long %>% select(geoid,region_type,region_name,year,variable,value)
-colnames(ookla_fairfax_dt_wide_long) <- c("geoid", "region_type", "region_name", "year", "measure","value")
+ookla_fairfax_dt_wide_long_2019 <- merge(ookla_fairfax_dt_wide_long_2019, geo_infos_id, by="geoid")
+ookla_fairfax_dt_wide_long_2020 <- merge(ookla_fairfax_dt_wide_long_2020, geo_infos_id, by="geoid")
+ookla_fairfax_dt_wide_long_2021 <- merge(ookla_fairfax_dt_wide_long_2021, geo_infos_id, by="geoid")
+
+ookla_fairfax_dt_wide_long_2019 <- ookla_fairfax_dt_wide_long_2019 %>% select(geoid,region_type,region_name,year,variable,value)
+ookla_fairfax_dt_wide_long_2020 <- ookla_fairfax_dt_wide_long_2020 %>% select(geoid,region_type,region_name,year,variable,value)
+ookla_fairfax_dt_wide_long_2021 <- ookla_fairfax_dt_wide_long_2021 %>% select(geoid,region_type,region_name,year,variable,value)
+
+colnames(ookla_fairfax_dt_wide_long_2019) <- c("geoid", "region_type", "region_name", "year", "measure","value")
+colnames(ookla_fairfax_dt_wide_long_2020) <- c("geoid", "region_type", "region_name", "year", "measure","value")
+colnames(ookla_fairfax_dt_wide_long_2021) <- c("geoid", "region_type", "region_name", "year", "measure","value")
 
 # change variables names and year
-ookla_fairfax_dt_wide_long$year <- "2019"
+ookla_fairfax_dt_wide_long_2019$year <- "2019"
+ookla_fairfax_dt_wide_long_2020$year <- "2020"
+ookla_fairfax_dt_wide_long_2021$year <- "2021"
 
 # save to DB
-write.csv(ookla_fairfax_dt_wide_long,"~/Github/dc.ookla.broadband/data/va059_zp_sdad_2019_speed_measurements.csv", row.names = FALSE)
+write.csv(ookla_fairfax_dt_wide_long_2019,"~/Github/dc.ookla.broadband/data/va059_zp_sdad_2019_speed_measurements.csv", row.names = FALSE)
+write.csv(ookla_fairfax_dt_wide_long_2020,"~/Github/dc.ookla.broadband/data/va059_zp_sdad_2020_speed_measurements.csv", row.names = FALSE)
+write.csv(ookla_fairfax_dt_wide_long_2021,"~/Github/dc.ookla.broadband/data/va059_zp_sdad_2021_speed_measurements.csv", row.names = FALSE)
+
 
